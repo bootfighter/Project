@@ -1,30 +1,24 @@
 package com.mygdx.codeAssets;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class CollisionRect {
-	float X_point_1;
-	float Y_point_1;
 	
-	float X_point_2;
-	float Y_point_2;
+	public Vector2 point1;
+	public Vector2 point2;
 	
-	public CollisionRect(float X_1, float Y_1, float X_2, float Y_2) {
-		X_point_1 = X_1;
-		Y_point_1 = Y_1;
+	
+	// Constructors
+	public CollisionRect(Vector2 a_point1, Vector2 a_point2) {
 		
-		X_point_2 = X_2;
-		Y_point_2 = Y_2;
+		point1 = a_point1;
+		point2 = a_point2;
+	
 	}
 	
-	public float getX_point_1() {
-		return X_point_1;
+	public CollisionRect() {
+		point1 = new Vector2(0,0);
+		point2 = new Vector2(0,0);
 	}
-	public float getY_point_1() {
-		return Y_point_1;
-	}
-	public float getX_point_2() {
-		return X_point_2;
-	}
-	public float getY_point_2() {
-		return Y_point_2;
-	}
+
 }
