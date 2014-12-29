@@ -19,6 +19,11 @@ public class Tile {
 	}
 	
 
+	public Tile(Texture a_texture, boolean a_is_solid){
+		texture = a_texture;
+		is_solid = a_is_solid;
+	}
+	
 	public Tile(){
 		texture = new Texture("missingtxt.png");
 		is_solid = true;
