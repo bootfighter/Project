@@ -1,6 +1,7 @@
-package com.mygdx.codeAssets;
+package com.mygdx.codeAssets.Objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 public class GameMap {
@@ -10,10 +11,7 @@ public class GameMap {
 	private int width;
 	private int height;
 
-	private SpriteBatch batch;
-	
 	final int textureSize = 16;
-	
 
 	// Constructors
 	public GameMap(int a_length, int a_width, int a_heigth) {
@@ -22,10 +20,8 @@ public class GameMap {
 		width = a_width;
 		height = a_heigth;
 		tileList = new Tile[length][width][height];
-		
+
 		fillWithTile(new Tile());
-		
-		batch = new SpriteBatch();
 	}
 
 	public GameMap() {
@@ -34,10 +30,9 @@ public class GameMap {
 		width = 1;
 		height = 0;
 		tileList = new Tile[length][width][height];
-		
+
 		fillWithTile(new Tile());
-		
-		batch = new SpriteBatch();
+
 	}
 
 	// Setters
@@ -55,8 +50,8 @@ public class GameMap {
 	}
 
 	// Getters
-	public Tile getTileAtPosition(int a_length, int a_width, int a_height) {
-		return tileList[a_length][a_width][a_height];
+	public Tile getTileAtPosition(Vector3 a_tilePosition) {
+		return tileList[(int)a_tilePosition.x][(int)a_tilePosition.y][(int)a_tilePosition.z];
 	}
 
 	public int getLength() {
@@ -102,30 +97,24 @@ public class GameMap {
 		}
 	}
 
-	
-	
-	public void renderGameMap() {
-		batch.begin();
+	public void draw(SpriteBatch a_batch) {
 
-		// spriteBatch.draw(tileList[1][1][0].texture, 10, 10);
+		a_batch.begin();
 
-		
 		for (int len = 0; len < length; len++) {
-			
-			for (int wid = 0; wid < width; wid++) {
-				
-				for (int hei = 0; hei < height; hei++) {
-					
-					batch.draw(tileList[len][wid][hei].texture, len * textureSize,  wid* textureSize);
-					
-				}
-			
-			}
-			
-		}
-		
-		batch.end();
 
+			for (int wid = 0; wid < width; wid++) {
+
+				for (int hei = 0; hei < height; hei++) {
+
+					a_batch.draw(tileList[len][wid][hei].texture, len * textureSize, wid * textureSize);
+
+				}
+
+			}
+
+		}
+		a_batch.end();
 	}
 
 }

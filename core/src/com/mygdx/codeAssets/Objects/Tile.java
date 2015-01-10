@@ -1,4 +1,4 @@
-package com.mygdx.codeAssets;
+package com.mygdx.codeAssets.Objects;
 
 import java.util.ArrayList;
 

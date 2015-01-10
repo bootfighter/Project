@@ -14,6 +14,10 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 720;
 		
+		
+		//no framelimiter
+		config.foregroundFPS = 0;
+		config.backgroundFPS = 0;
 
 		// ------------------ //
 				
