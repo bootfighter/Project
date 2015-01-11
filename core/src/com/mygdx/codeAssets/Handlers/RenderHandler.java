@@ -29,12 +29,15 @@ public class RenderHandler {
 	
 	
 	public void zoom(int a_deltaZoom) {
-		if (orthoCamera.zoom + a_deltaZoom * 0.1f <= 2f && orthoCamera.zoom + a_deltaZoom * 0.1f >= 0.5f) {
+		if (orthoCamera.zoom + a_deltaZoom * 0.1f <= 1.3f && orthoCamera.zoom + a_deltaZoom * 0.1f >= 0.2f) {
 			orthoCamera.zoom += a_deltaZoom * 0.1f;
 		}
-		
 	}
 	
+	public void resize(int a_XSize, int a_YSize) {
+		orthoCamera.viewportHeight = a_YSize;
+		orthoCamera.viewportWidth = a_XSize;
+	}
 	
 	public void draw() {
 		

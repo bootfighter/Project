@@ -14,10 +14,16 @@ public class DesktopLauncher {
 		config.width = 1280;
 		config.height = 720;
 		
+		//title
+		config.title = "Action RPG and Farming Simulator";
+		
+		
+		//MSAA - Multi Sampling Anti Aliasing
+		config.samples = 8;
 		
 		//no framelimiter
-		config.foregroundFPS = 0;
-		config.backgroundFPS = 0;
+		config.foregroundFPS = 60;
+		config.backgroundFPS = 20;
 
 		// ------------------ //
 				

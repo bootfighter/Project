@@ -31,8 +31,8 @@ public class Game extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 				
-		playerHandler = new PlayerHandler();
-		mapHandler = new MapHandler(playerHandler);
+		mapHandler = new MapHandler();
+		playerHandler = new PlayerHandler(mapHandler);
 		renderHandler = new RenderHandler(mapHandler, playerHandler, batch);
 		eventHandler = new EventHandler(mapHandler, playerHandler, renderHandler);
 		
@@ -50,9 +50,15 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0.6f, 0.7f, 1.f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		
 		renderHandler.draw();
 		mapHandler.update();
 		playerHandler.update();
 	
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		renderHandler.resize(width, height);
 	}
 }

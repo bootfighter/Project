@@ -1,5 +1,6 @@
 package com.mygdx.codeAssets.Handlers;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.GameMap;
 import com.mygdx.codeAssets.Objects.Tile;
@@ -8,17 +9,19 @@ public class MapHandler {
 	
 	GameMap currentMap;
 	GameMap lastMap;
-	PlayerHandler playerHandler;
 		
-	public MapHandler(PlayerHandler a_playerHandler) {
-		currentMap = lastMap = new GameMap(10,10,3);
-		playerHandler = a_playerHandler;
-		currentMap.fillWithTile(new Tile());
+	public MapHandler() {
+		currentMap = lastMap = new GameMap(30,30,1);
+		currentMap.fillWithTile(new Tile(new Texture("missingtxt.png"), false));
+		
+//		currentMap.setTileAtPosition(new Tile(new Texture("dirt.png"),true), 3, 3, 0);
+		currentMap.fillWithTile(new Tile(new Texture("dirt.png"),true), new Vector3(4, 4, 0), new Vector3(8, 8, 0));
+
+		currentMap.fillWithTile(new Tile(new Texture("dirt.png"),true), new Vector3(9, 4, 0), new Vector3(11, 10, 0));
 	}
 	
 	
 	public void update() {
-		
 		
 		
 	}

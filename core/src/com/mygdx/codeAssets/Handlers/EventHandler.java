@@ -12,12 +12,14 @@ public class EventHandler implements InputProcessor {
 	PlayerHandler playerHandler;
 	RenderHandler renderHandler;
 	Vector2 playerDirection;
+	Vector2 facingDirection;
 	
 	public EventHandler(MapHandler a_mapHandler, PlayerHandler a_playerHandler, RenderHandler a_renderHandler){
 		mapHandler = a_mapHandler;
 		playerHandler = a_playerHandler;
 		renderHandler = a_renderHandler;
-		playerDirection = Vector2.Zero;
+		playerDirection = new Vector2(0,0);
+		facingDirection = new Vector2(0,0);
 	}
 	
 	@Override
@@ -46,6 +48,10 @@ public class EventHandler implements InputProcessor {
 				playerDirection.x = 0;
 			else
 				playerDirection.x = -1;
+			break;
+			
+		case Keys.SHIFT_LEFT:
+				playerHandler.sprinting = true;			
 			break;
 		default:
 			break;
@@ -87,8 +93,11 @@ public class EventHandler implements InputProcessor {
 			}
 			playerDirection.x = 0;
 			break;
+		case Keys.SHIFT_LEFT:
+			playerHandler.sprinting = false;			
+		break;
 		default:
-			break;
+			return false;
 		}
 		
 		playerDirection.nor();
@@ -123,8 +132,29 @@ public class EventHandler implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		facingDirection.x = (Gdx.graphics.getWidth() / 2) - screenX;
+		facingDirection.y = (Gdx.graphics.getHeight() / 2) - screenY;
+		
+		facingDirection.nor();
+		
+		if (facingDirection.x <= -0.5f)
+			facingDirection.x = -1f;
+		else if (facingDirection.x >= 0.5f)
+			facingDirection.x = 1f;
+		else
+			facingDirection.x = 0f;
+		
+		if (facingDirection.y <= -0.5f)
+			facingDirection.y = -1f;
+		else if (facingDirection.y >= 0.5f)
+			facingDirection.y = 1f;
+		else
+			facingDirection.y = 0f;
+		
+		
+		
+		return true;
 	}
 
 	@Override
