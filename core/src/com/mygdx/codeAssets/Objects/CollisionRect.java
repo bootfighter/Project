@@ -10,10 +10,8 @@ public class CollisionRect {
 	
 	// Constructors
 	public CollisionRect(Vector2 a_point1, Vector2 a_point2) {
-		
 		point1 = a_point1;
 		point2 = a_point2;
-	
 	}
 	
 	public CollisionRect() {

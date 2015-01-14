@@ -23,6 +23,8 @@ public class MapHandler {
 	
 	public void update() {
 		
+		//TODO:
+		//loading of maps? or does the player decide what to load?
 		
 	}
 	
