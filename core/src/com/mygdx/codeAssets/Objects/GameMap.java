@@ -81,17 +81,17 @@ public class GameMap {
 
 	public Tile[][][] getTileSubsection(Vector3 a_point1, Vector3 a_point2)
 	{
-		int dimX = (int) (a_point1.x - a_point2.x);
-		int dimY = (int) (a_point1.y - a_point2.y);
-		int dimZ = (int) (a_point1.z - a_point2.z);
+		int dimX = (int) (a_point2.x - a_point1.x);
+		int dimY = (int) (a_point2.y - a_point1.y);
+		int dimZ = (int) (a_point2.z - a_point1.z);
 				
-		Tile[][][] tileSubsection = new Tile[dimX][dimY][dimZ];
+		Tile[][][] tileSubsection = new Tile[dimX+1][dimY+1][dimZ+1];
 		
-		for (int x = 0; x < dimX; x++) {
+		for (int x = 0; x <= dimX; x++) {
 			
-			for (int y = 0; y < dimY; y++) {
+			for (int y = 0; y <= dimY; y++) {
 
-				for (int z = 0; z < dimZ; z++) {
+				for (int z = 0; z <= dimZ; z++) {
 					
 					tileSubsection[x][y][z] = tileList[(int)a_point1.x + x][(int)a_point1.y + y][(int)a_point1.z + z];
 					

@@ -18,8 +18,8 @@ public class EventHandler implements InputProcessor {
 		mapHandler = a_mapHandler;
 		playerHandler = a_playerHandler;
 		renderHandler = a_renderHandler;
-		playerDirection = new Vector2(0,0);
-		facingDirection = new Vector2(0,0);
+		playerDirection = new Vector2(a_playerHandler.player.getDirection());
+		facingDirection = new Vector2(a_playerHandler.player.getFacingDirection());
 	}
 	
 	@Override
@@ -51,13 +51,13 @@ public class EventHandler implements InputProcessor {
 			break;
 			
 		case Keys.SHIFT_LEFT:
-				playerHandler.sprinting = true;			
+				playerHandler.player.sprinting = true;			
 			break;
 		default:
 			break;
 		}
 		playerDirection.nor();
-		playerHandler.direction = playerDirection;
+		playerHandler.player.setDirection(playerDirection);
 		
 		return true;
 	}
@@ -94,14 +94,14 @@ public class EventHandler implements InputProcessor {
 			playerDirection.x = 0;
 			break;
 		case Keys.SHIFT_LEFT:
-			playerHandler.sprinting = false;			
+			playerHandler.player.sprinting = true;			
 		break;
 		default:
 			return false;
 		}
 		
 		playerDirection.nor();
-		playerHandler.direction = playerDirection;
+		playerHandler.player.setDirection(playerDirection);
 		
 		return true;
 	}
@@ -138,12 +138,15 @@ public class EventHandler implements InputProcessor {
 		
 		facingDirection.nor();
 		
+		
+		
 		if (facingDirection.x <= -0.5f)
-			facingDirection.x = -1f;
-		else if (facingDirection.x >= 0.5f)
 			facingDirection.x = 1f;
+		else if (facingDirection.x >= 0.5f)
+			facingDirection.x = -1f;
 		else
 			facingDirection.x = 0f;
+		
 		
 		if (facingDirection.y <= -0.5f)
 			facingDirection.y = -1f;
@@ -152,8 +155,8 @@ public class EventHandler implements InputProcessor {
 		else
 			facingDirection.y = 0f;
 		
-		
-		
+		playerHandler.player.setFacingDirection(facingDirection);
+				
 		return true;
 	}
 

@@ -41,7 +41,7 @@ public class RenderHandler {
 	
 	public void draw() {
 		
-		orthoCamera.position.set(new Vector2(playerHandler.position.x, playerHandler.position.y), 0f);
+		orthoCamera.position.set(new Vector2(playerHandler.player.position.x, playerHandler.player.position.y), 0f);
 		orthoCamera.update();
 		currentMap = mapHandler.getCurrentMap();
 		

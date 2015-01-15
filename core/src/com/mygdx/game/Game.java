@@ -5,9 +5,11 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.codeAssets.Handlers.*;
+import com.mygdx.codeAssets.Handlers.EventHandler;
+import com.mygdx.codeAssets.Handlers.MapHandler;
+import com.mygdx.codeAssets.Handlers.PlayerHandler;
+import com.mygdx.codeAssets.Handlers.RenderHandler;
 
 
 public class Game extends ApplicationAdapter {
@@ -18,14 +20,7 @@ public class Game extends ApplicationAdapter {
 	MapHandler mapHandler;
 	EventHandler eventHandler;
 	RenderHandler renderHandler;
-	
-	
-	
-	Texture img;
-	Texture dirtTexture;
-//	GameMap testMap;
-	
-	
+
 	
 	@Override
 	public void create () {
@@ -38,9 +33,6 @@ public class Game extends ApplicationAdapter {
 		
 		Gdx.input.setInputProcessor(eventHandler);
 		
-		//textures
-		img = new Texture("badlogic.jpg");
-		dirtTexture = new Texture("dirt.png");
 	}
 
 	
@@ -54,7 +46,8 @@ public class Game extends ApplicationAdapter {
 		renderHandler.draw();
 		mapHandler.update();
 		playerHandler.update();
-	
+		
+		
 	}
 	
 	@Override
