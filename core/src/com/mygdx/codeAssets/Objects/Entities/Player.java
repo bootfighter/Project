@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.CollisionRect;
 import com.mygdx.codeAssets.Objects.Entity;
 import com.mygdx.codeAssets.Objects.GameMap;
+import com.mygdx.codeAssets.Objects.Tile;
 
 public class Player extends Entity{
 	
@@ -42,6 +43,8 @@ public class Player extends Entity{
 	
 	public void update(GameMap a_map) {
 		
+		tilePosition = Tile.convertWorldSpaceToTileSpace(position);
+		
 		moveVector.x = 0;
 		moveVector.y = 0;
 		
@@ -56,14 +59,11 @@ public class Player extends Entity{
 			
 			this.collisionDetection(moveVector, a_map);
 			
-			this.move(moveVector);
-			
 		} else {
 			
 			moveVector.x += direction.x * sprintSpeed * Gdx.graphics.getDeltaTime();
 			moveVector.y += direction.y * sprintSpeed * Gdx.graphics.getDeltaTime();
 			this.collisionDetection(moveVector, a_map);
-			this.move(moveVector);
 		}
 		
 		

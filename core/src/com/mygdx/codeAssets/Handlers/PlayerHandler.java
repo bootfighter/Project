@@ -1,6 +1,7 @@
 package com.mygdx.codeAssets.Handlers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.Entities.Player;
 
 public class PlayerHandler {
@@ -15,6 +16,7 @@ public class PlayerHandler {
 	public PlayerHandler(MapHandler a_mapHandler) {
 		mapHandler = a_mapHandler;
 		player = new Player();
+		player.position = new Vector3(30, 30, 0);
 	}
 	
 	

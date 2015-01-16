@@ -1,7 +1,11 @@
 package com.mygdx.codeAssets.Handlers;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.codeAssets.Objects.CollisionRect;
 import com.mygdx.codeAssets.Objects.GameMap;
 import com.mygdx.codeAssets.Objects.Tile;
 
@@ -15,9 +19,17 @@ public class MapHandler {
 		currentMap.fillWithTile(new Tile(new Texture("missingtxt.png"), false));
 		
 //		currentMap.setTileAtPosition(new Tile(new Texture("dirt.png"),true), 3, 3, 0);
-		currentMap.fillWithTile(new Tile(new Texture("dirt.png"),true), new Vector3(4, 4, 0), new Vector3(8, 8, 0));
+		currentMap.fillWithTile(new Tile(new Texture("dirt.png"), true), new Vector3(4, 4, 0), new Vector3(8, 8, 0));
 
-		currentMap.fillWithTile(new Tile(new Texture("dirt.png"),true), new Vector3(9, 4, 0), new Vector3(11, 10, 0));
+		currentMap.fillWithTile(new Tile(new Texture("dirt.png"), true), new Vector3(9, 4, 0), new Vector3(11, 10, 0));
+		
+		
+		currentMap.fillWithTile(new Tile(new Texture("dirt.png"), true), new Vector3(4, 16, 0), new Vector3(5, 17, 0));
+		
+		ArrayList<CollisionRect> tempList = new ArrayList<CollisionRect>();
+		tempList.add(new CollisionRect(new Vector2(4, 0), new Vector2(8, 16)));
+		
+		currentMap.fillWithTile(new Tile(new Texture("grass.png"), tempList), new Vector3(15,13,0), new Vector3(16, 18, 0));
 	}
 	
 	

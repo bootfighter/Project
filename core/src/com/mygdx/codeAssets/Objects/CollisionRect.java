@@ -38,30 +38,36 @@ public class CollisionRect {
 		rect2.point1.add(a_rect2Pos);
 		rect2.point2.add(a_rect2Pos);
 		
-		if (rect1.point1.x < rect2.point2.x && rect1.point1.x > rect2.point1.x) {
-			if (rect1.point1.y < rect2.point2.y && rect1.point1.y > rect2.point1.y) {
-				return true;
-			}
-			if ((rect1.point2.y < rect2.point2.y && rect1.point2.y > rect2.point1.y)) {
-				return true;
-			}
-		}
+//		if (rect1.point1.x < rect2.point2.x && rect1.point1.x > rect2.point1.x) {
+//			if (rect1.point1.y < rect2.point2.y && rect1.point1.y > rect2.point1.y) {
+//				return true;
+//			}
+//			if ((rect1.point2.y < rect2.point2.y && rect1.point2.y > rect2.point1.y)) {
+//				return true;
+//			}
+//		}
+//		
+//		if (rect1.point2.x < rect2.point2.x && rect1.point2.x > rect2.point1.x) {
+//			
+//			if (rect1.point1.y < rect2.point2.y && rect1.point1.y > rect2.point1.y) {
+//				return true;
+//			}
+//			if ((rect1.point2.y < rect2.point2.y && rect1.point2.y > rect2.point1.y)) {
+//				return true;
+//			}
+//		}
 		
-		if (rect1.point2.x < rect2.point2.x && rect1.point2.x > rect2.point1.x) {
+		if (rect1.point2.x <= rect2.point1.x ||
+				rect2.point2.x <= rect1.point1.x ||
+				rect2.point2.y <= rect1.point1.y ||
+				rect1.point2.y <= rect2.point1.y) 
+			return false;
 			
-			if (rect1.point1.y < rect2.point2.y && rect1.point1.y > rect2.point1.y) {
-				return true;
-			}
-			if ((rect1.point2.y < rect2.point2.y && rect1.point2.y > rect2.point1.y)) {
-				return true;
-			}
-		}
-			
-		return false;
+		return true;
 	}
 	
 	
-	public static boolean isCollidingWithTile(CollisionRect a_rect, Vector2 a_rectPos, Tile a_tile, Vector3 a_tilePosition){
+	public static CollisionRect isCollidingWithTile(CollisionRect a_rect, Vector2 a_rectPos, Tile a_tile, Vector3 a_tilePosition){
 		
 		ArrayList<CollisionRect> collRectList = a_tile.getCollision_boxes();
 		Vector2 tilePositionInWorldCoord = new Vector2(a_tilePosition.x * GameParameters.tileSize, a_tilePosition.y * GameParameters.tileSize);
@@ -69,9 +75,9 @@ public class CollisionRect {
 		
 		for (CollisionRect currRect : collRectList) {
 			if(CollisionRect.isColliding(rect, currRect, a_rectPos, tilePositionInWorldCoord))
-				return true;
+				return currRect;
 		}
-		return false;
+		return null;
 	}
 	
 }

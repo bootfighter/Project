@@ -25,6 +25,8 @@ public class EventHandler implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
+		
+		
 		case Keys.W:
 			if (Gdx.input.isKeyPressed(Keys.S))
 				playerDirection.y = 0;
@@ -50,9 +52,14 @@ public class EventHandler implements InputProcessor {
 				playerDirection.x = -1;
 			break;
 			
+			
+			
 		case Keys.SHIFT_LEFT:
 				playerHandler.player.sprinting = true;			
 			break;
+			
+		case Keys.F1:
+			renderHandler.isDebug = !renderHandler.isDebug; 
 		default:
 			break;
 		}
@@ -94,7 +101,7 @@ public class EventHandler implements InputProcessor {
 			playerDirection.x = 0;
 			break;
 		case Keys.SHIFT_LEFT:
-			playerHandler.player.sprinting = true;			
+			playerHandler.player.sprinting = false;			
 		break;
 		default:
 			return false;

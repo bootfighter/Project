@@ -47,6 +47,10 @@ public class Tile {
 		return (a_tileSpace * tileSize);
 	}
 	
+	public static Vector3 convertTileSpaceToWorldSpace(int a_tileSpaceDimX, int a_tileSpaceDimY, int a_tileSpaceDimZ ){
+		return (new Vector3(a_tileSpaceDimX * tileSize, a_tileSpaceDimY * tileSize, a_tileSpaceDimZ * tileSize));
+	}
+	
 	public static Vector3 convertWorldSpaceToTileSpace (Vector3 a_tileSpace){
 		return new Vector3(	(int)a_tileSpace.x / tileSize, 
 				(int)a_tileSpace.y / tileSize,
