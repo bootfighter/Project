@@ -37,6 +37,12 @@ public class Tile {
 		return collision_boxes;
 	}
 	
+	
+	
+	
+	
+	//static functions
+	
 	public static Vector3 convertTileSpaceToWorldSpace (Vector3 a_tileSpace){
 		return new Vector3(	a_tileSpace.x * tileSize, 
 				a_tileSpace.y * tileSize,
@@ -60,7 +66,6 @@ public class Tile {
 	public static int convertWorldSpaceToTileSpace (int  a_tileSpace){
 		return (a_tileSpace / tileSize);
 	}
-	
 	
 	
 }

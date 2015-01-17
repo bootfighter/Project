@@ -82,24 +82,34 @@ public abstract class Entity {
 		
 		Tile[][][] currentTileList = a_map.getTileSubsection(subsectionPoint1, subsectionPoint2);
 		
-		//resetting to starting position for calulating actual new position
 		
-		for (int dimX = 0; dimX <= subsectionPoint2.x - subsectionPoint1.x; dimX++) {
-			for (int dimY = 0; dimY <= subsectionPoint2.y - subsectionPoint1.y; dimY++) {
-				for (int dimZ = 0; dimZ <= subsectionPoint2.z - subsectionPoint1.z; dimZ++) {
+		int posX = 0;
+		int posY = 0;
+		int posZ = 0;
+			
+		for(int dimX = 0 ; dimX <= (subsectionPoint2.x - subsectionPoint1.x) ; dimX++){ 
+			posX = (int) (moveVector.x < 0 ? (subsectionPoint2.x - subsectionPoint1.x) - dimX : dimX);
+			
+			for(int dimY = 0 ; dimY <= (subsectionPoint2.y - subsectionPoint1.y) ; dimY++){
+				posY = (int) (moveVector.y < 0 ? (subsectionPoint2.y - subsectionPoint1.y) - dimY : dimY);
+				
+				for(int dimZ = 0 ; dimZ <= (subsectionPoint2.z - subsectionPoint1.z) ; dimZ++){
+					posZ = (int) (moveVector.z < 0 ? (subsectionPoint2.z - subsectionPoint1.z) - dimZ : dimZ);
 
 					currVectorLen = 0;
 
 					while(currVectorLen < moveVectorLen){
+						
 						currentRect = CollisionRect.isCollidingWithTile(collisionRect,
 								new Vector2(newPosition.x + (moveVectorNormal.x * currVectorLen), newPosition.y + (moveVectorNormal.y * currVectorLen)), 
-								currentTileList[dimX][dimY][dimZ], new Vector3(subsectionPoint1.x + dimX, subsectionPoint1.y + dimY, subsectionPoint1.z + dimZ));
+								currentTileList[posX][posY][posZ], new Vector3(subsectionPoint1.x + posX, subsectionPoint1.y + posY, subsectionPoint1.z + posZ));
 
 						//if a colliding Rect has been found
 						if (currentRect != null) {
 
-							changedPos = calculateCollidedPos(currentRect, Tile.convertTileSpaceToWorldSpace((int)subsectionPoint1.x + dimX,
-									(int)subsectionPoint1.y + dimY, (int)subsectionPoint1.z + dimZ), moveVector);
+							changedPos = calculateCollidedPos(currentRect, Tile.convertTileSpaceToWorldSpace((int)subsectionPoint1.x + posX,
+									(int)subsectionPoint1.y + posY, (int)subsectionPoint1.z + posZ), moveVector);
+							
 							if (changedPos.x != 0){
 								newPosition.x = changedPos.x;
 								moveVector.x = 0;
@@ -115,8 +125,6 @@ public abstract class Entity {
 
 						currVectorLen += collisionIteration;
 					}
-
-					
 				}
 			}
 		}
