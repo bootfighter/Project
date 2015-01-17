@@ -89,9 +89,9 @@ public class RenderHandler {
 				+ String.format("%.2f", playerHandler.player.position.y) + " | "  
 				+ String.format("%.2f", playerHandler.player.position.z), debugPosition.x, debugPosition.y - debugFont.getLineHeight() - 2);
 		debugFont.draw(debugBatch, "t-XYZ: " 
-				+ String.format("%.2f", playerHandler.player.tilePosition.x) + " | "   
-				+ String.format("%.2f", playerHandler.player.tilePosition.y) + " | "  
-				+ String.format("%.2f", playerHandler.player.tilePosition.z), debugPosition.x, debugPosition.y - (2 * debugFont.getLineHeight()) - 2);
+				+ String.format("%.0f", playerHandler.player.tilePosition.x) + " | "   
+				+ String.format("%.0f", playerHandler.player.tilePosition.y) + " | "  
+				+ String.format("%.0f", playerHandler.player.tilePosition.z), debugPosition.x, debugPosition.y - (2 * debugFont.getLineHeight()) - 2);
 		debugFont.draw(debugBatch, "Facing: "  + String.format("%2.0f", playerHandler.player.getFacingDirection().x)
 				+ String.format("%2.0f", playerHandler.player.getFacingDirection().y), debugPosition.x, debugPosition.y - (3 * debugFont.getLineHeight())- 2);
 		//System.out.println((Gdx.graphics.getHeight() - 30));

@@ -15,21 +15,23 @@ public class MapHandler {
 	GameMap lastMap;
 		
 	public MapHandler() {
-		currentMap = lastMap = new GameMap(30,30,1);
-		currentMap.fillWithTile(new Tile(new Texture("missingtxt.png"), false));
+		currentMap = lastMap = new GameMap(50,50,1);
 		
-//		currentMap.setTileAtPosition(new Tile(new Texture("dirt.png"),true), 3, 3, 0);
-		currentMap.fillWithTile(new Tile(new Texture("dirt.png"), true), new Vector3(4, 4, 0), new Vector3(8, 8, 0));
-
-		currentMap.fillWithTile(new Tile(new Texture("dirt.png"), true), new Vector3(9, 4, 0), new Vector3(11, 10, 0));
+		currentMap.fillWithTile(new Tile(new Texture("grass.png"), false));
+		
+		Tile dirt = new Tile(new Texture("dirt.png"), true);
 		
 		
-		currentMap.fillWithTile(new Tile(new Texture("dirt.png"), true), new Vector3(4, 16, 0), new Vector3(5, 17, 0));
+		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(1, currentMap.getDimensionY(), 0));
+		currentMap.fillWithTile(dirt, new Vector3(0, currentMap.getDimensionY() - 1, 0), new Vector3(currentMap.getDimensionX(), currentMap.getDimensionY(), 0));
+		currentMap.fillWithTile(dirt, new Vector3(currentMap.getDimensionX() - 1, 0, 0), new Vector3(currentMap.getDimensionX(), currentMap.getDimensionY(), 0));
+		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(currentMap.getDimensionX(), 1, 0));
+		
+		currentMap.fillWithTile(dirt, new Vector3(8, 8, 0), new Vector3(24, 24, 0));
 		
 		ArrayList<CollisionRect> tempList = new ArrayList<CollisionRect>();
 		tempList.add(new CollisionRect(new Vector2(4, 0), new Vector2(8, 16)));
 		
-		currentMap.fillWithTile(new Tile(new Texture("grass.png"), tempList), new Vector3(15,13,0), new Vector3(16, 18, 0));
 	}
 	
 	
