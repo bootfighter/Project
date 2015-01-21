@@ -143,17 +143,10 @@ public abstract class Entity {
 		worldPosRect.point1.add(new Vector2(a_rectPos.x, a_rectPos.y));
 		worldPosRect.point2.add(new Vector2(a_rectPos.x, a_rectPos.y));
 		
-		System.out.println(a_moveVector);
-
-
-
 		if (position.x + collisionRect.point2.x <= worldPosRect.point1.x) {
 			//coming from left
 
 			newPosition.x = worldPosRect.point1.x - collisionRect.point2.x;
-
-			System.out.println("L " + (position.x + collisionRect.point2.x) + " | " + worldPosRect.point1.x + " setting x: " + (worldPosRect.point1.x - collisionRect.point2.x));
-
 			return new Vector3(newPosition, position.z);
 		}
 
@@ -161,8 +154,6 @@ public abstract class Entity {
 			//coming from right
 
 			newPosition.x = worldPosRect.point2.x;
-
-			System.out.println("R " + position.x + " | " + worldPosRect.point2.x + " setting x: " + worldPosRect.point2.x);
 			return new Vector3(newPosition, position.z);
 		}
 		
@@ -170,8 +161,6 @@ public abstract class Entity {
 			//coming from under
 
 			newPosition.y = worldPosRect.point1.y - collisionRect.point2.y;
-
-			System.out.println("B");
 			return new Vector3(newPosition, position.z);
 
 		}
@@ -179,19 +168,8 @@ public abstract class Entity {
 			//coming from up
 
 			newPosition.y = worldPosRect.point2.y;
-
-			System.out.println("T " + position.y + " | " + worldPosRect.point2.y + " setting y: " +  worldPosRect.point2.y);
 			return new Vector3(newPosition, position.z);
 		}
-
-
-
-
-		
-		
-		
-		System.out.println("R " + position.x + " >= " + worldPosRect.point2.x);
-		
 		
 		return new Vector3(newPosition, position.z);
 	}
