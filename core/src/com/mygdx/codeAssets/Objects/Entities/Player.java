@@ -41,6 +41,7 @@ public class Player extends Entity{
 		this.facingDirection = facingDirection;
 	}
 	
+	@Override
 	public void update(GameMap a_map) {
 		
 		tilePosition = Tile.convertWorldSpaceToTileSpace(position);

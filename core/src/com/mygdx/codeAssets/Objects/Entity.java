@@ -47,7 +47,9 @@ public abstract class Entity {
 	}
 	
 	
-	public void move(Vector3 a_amount)	{		
+	public abstract void update(GameMap a_map);
+	
+	public void move(Vector3 a_amount)	{
 		position.add(a_amount);
 	}
 	

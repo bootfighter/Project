@@ -1,20 +1,31 @@
 package com.mygdx.codeAssets.Objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Item {
+public abstract class Item {
 
-	private Texture texture;
-	protected int id;
+	private Sprite texture;
+	protected final String itemName;
 	
-	public Item(int id) {
+	public Item(String a_itemName) {
 		//TODO: write function to load texture with identifier number. For now missingtxt
-		texture = new Texture("missingtxt.png");
+		itemName = a_itemName;
+		try {
+			texture = new Sprite(new Texture(itemName + ".png"));
+		} catch (Exception e) {
+			texture = new Sprite(new Texture("missingtxt.png"));
+		}
 	}
 	
 	
-	public Texture getTexture() {
+	public Sprite getTexture() {
 		return texture;
 	}
 	
+	public void leftClickAction (){
+	}
+	
+	public void rightClickAction (){
+	}
 }
