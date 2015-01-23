@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.Weapon;
 import com.mygdx.codeAssets.Objects.Entities.Player;
-import com.mygdx.codeAssets.Objects.Weapons.SapphireDagger;
+import com.mygdx.codeAssets.Objects.Weapons.Daggers.SapphireDagger;
 
 public class PlayerHandler {
 	
@@ -40,7 +40,7 @@ public class PlayerHandler {
 		//		die position werden mit animation verändert. keine ahnung was hier noch kommt ^^ vllt ein skript?
 		a_batch.draw(player.getTexture(), player.position.x, player.position.y);
 
-		weapon.getTexture().setPosition(player.position.x + weapon.getOffset().x, player.position.y + weapon.getOffset().y);
+		weapon.getTexture().setPosition(player.position.x, player.position.y);
 		weapon.getTexture().draw(a_batch);
 		
 		a_batch.end();
