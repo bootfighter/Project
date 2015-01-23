@@ -66,7 +66,7 @@ public class RenderHandler {
 		batch.setProjectionMatrix(orthoCamera.combined);
 		
 		
-		currentMap.draw(batch);
+		currentMap.draw(batch, orthoCamera.zoom, playerHandler.player.position);
 		playerHandler.draw(batch);
 		
 		if (isDebug)

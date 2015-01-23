@@ -15,7 +15,7 @@ public class MapHandler {
 	GameMap lastMap;
 		
 	public MapHandler() {
-		currentMap = lastMap = new GameMap(50,50,1);
+		currentMap = lastMap = new GameMap(500,500,1);
 		
 		currentMap.fillWithTile(new Tile(new Texture("grass.png"), false));
 		

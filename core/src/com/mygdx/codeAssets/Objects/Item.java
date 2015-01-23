@@ -5,27 +5,27 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public abstract class Item {
 
-	private Sprite texture;
+	protected Sprite sprite;
 	protected final String itemName;
 	
 	public Item(String a_itemName) {
 		//TODO: write function to load texture with identifier number. For now missingtxt
 		itemName = a_itemName;
 		try {
-			texture = new Sprite(new Texture(itemName + ".png"));
+			sprite = new Sprite(new Texture(itemName + ".png"));
 		} catch (Exception e) {
-			texture = new Sprite(new Texture("missingtxt.png"));
+			sprite = new Sprite(new Texture("missingtxt.png"));
 		}
 	}
 	
 	
 	public Sprite getTexture() {
-		return texture;
+		return sprite;
 	}
 	
-	public void leftClickAction (){
+	public void leftClickAction (GameMap a_map){
 	}
 	
-	public void rightClickAction (){
+	public void rightClickAction (GameMap a_map){
 	}
 }
