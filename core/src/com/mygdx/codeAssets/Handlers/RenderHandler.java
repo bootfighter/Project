@@ -47,7 +47,7 @@ public class RenderHandler {
 	public boolean isDebug;
 
 	public void zoom(int a_deltaZoom) {
-		if (orthoCamera.zoom + a_deltaZoom * 0.1f <= 1.3f && orthoCamera.zoom + a_deltaZoom * 0.1f >= 0.2f) {
+		if (orthoCamera.zoom + a_deltaZoom * 0.1f <= 1.3f && orthoCamera.zoom + a_deltaZoom * 0.1f >= 0.0f) {
 			orthoCamera.zoom += a_deltaZoom * 0.1f;
 		}
 	}

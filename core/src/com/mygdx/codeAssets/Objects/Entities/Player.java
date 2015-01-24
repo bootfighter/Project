@@ -2,12 +2,15 @@ package com.mygdx.codeAssets.Objects.Entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.codeAssets.Objects.AnimationSkeleton;
 import com.mygdx.codeAssets.Objects.CollisionRect;
 import com.mygdx.codeAssets.Objects.Entity;
 import com.mygdx.codeAssets.Objects.GameMap;
 import com.mygdx.codeAssets.Objects.Tile;
+import com.mygdx.game.GameParameters.Direction;
 
 public class Player extends Entity{
 	
@@ -16,6 +19,9 @@ public class Player extends Entity{
 	private int walkSpeed;
 	private int sprintSpeed;
 	public boolean sprinting;
+	
+	AnimationSkeleton animSkel;
+	
 	
 	public Player() {
 		super();
@@ -26,6 +32,7 @@ public class Player extends Entity{
 		sprinting = false;
 		texture = new Texture("player.png");
 		collisionRect = new CollisionRect(new Vector2(0, 0), new Vector2(16, 16));
+		animSkel = new AnimationSkeleton();
 	}
 	
 	public int getWalkSpeed() {
@@ -67,6 +74,11 @@ public class Player extends Entity{
 			this.collisionDetection(moveVector, a_map);
 		}
 		
+	}
+	
+	public void draw(SpriteBatch a_batch) {
+		
+		animSkel.testDraw(a_batch, Direction.NORTH, 0);
 		
 	}
 }
