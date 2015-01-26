@@ -40,7 +40,7 @@ public class PlayerHandler {
 		//TODO: Multi equipment animation and rendering
 		//		Jedes item hat eine texture die an einer position zeichnet wird
 		//		die position werden mit animation verändert. keine ahnung was hier noch kommt ^^ vllt ein skript?
-		//a_batch.draw(player.getTexture(), player.position.x, player.position.y);
+		a_batch.draw(player.getTexture(), player.position.x, player.position.y);
 		
 		
 		weapon.getTexture().setPosition(player.position.x, player.position.y);
