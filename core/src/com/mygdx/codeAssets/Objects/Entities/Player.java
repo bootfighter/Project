@@ -32,7 +32,8 @@ public class Player extends Entity{
 		sprinting = false;
 		texture = new Texture("player.png");
 		collisionRect = new CollisionRect(new Vector2(0, 0), new Vector2(16, 16));
-		animSkel = new AnimationSkeleton();
+		animSkel = new AnimationSkeleton(new Vector2(position.x, position.y));
+		animSkel.startAnimation(0, Direction.NORTH);
 	}
 	
 	public int getWalkSpeed() {
@@ -51,10 +52,15 @@ public class Player extends Entity{
 	@Override
 	public void update(GameMap a_map) {
 		
+		
+		
 		tilePosition = Tile.convertWorldSpaceToTileSpace(position);
 		
 		moveVector.x = 0;
 		moveVector.y = 0;
+		
+		animSkel.setPosition(new Vector2(position.x, position.y));
+		animSkel.update(Direction.NORTH);
 		
 		if (direction.x == 0 && direction.y == 0) 
 			return;
@@ -74,11 +80,14 @@ public class Player extends Entity{
 			this.collisionDetection(moveVector, a_map);
 		}
 		
+		
+		
+		
 	}
 	
 	public void draw(SpriteBatch a_batch) {
 		
-		animSkel.testDraw(a_batch, Direction.NORTH, 0);
+		animSkel.draw(a_batch);
 		
 	}
 }
