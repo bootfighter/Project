@@ -1,57 +1,33 @@
 package com.mygdx.codeAssets.Objects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.codeAssets.AnimationData.PlayerWalking;
 import com.mygdx.game.GameParameters.Direction;
 
 
 
 
 public class AnimationSkeleton {
-	
-	class Vector2Scalbl extends Vector2{
-		private static final long serialVersionUID = 1L;
-		public float transformedX;
-		public float transformedY;
 		
-		public Vector2Scalbl(int a_x, int a_y) {
-			this.x = a_x;
-			this.y = a_y;
-			this.transformedX = a_x;
-			this.transformedY = a_y;
-		}
-
-		public void setScaleFromBase(float a_scaleX, float a_scaleY)
-		{
-			transformedX = this.x * a_scaleX;
-			transformedY = this.y * a_scaleY;
-		}
-		
-		public void setRotationOfBase(float a_angle){
-			Vector2 tmp = new Vector2(this.x, this.y);
-			tmp.rotate(a_angle);
-			transformedX = tmp.x;
-			transformedY = tmp.y;
-		}
-	}
-	
 	private Sprite spriteList[];
 	private AnimationStateSet animationStateSets[][];
 	protected final int numberOfAnimations;
 	private final int numberOfSpriteParts;
+	private final static int walkingAnimationTime = 1500;
 	private int deltaAnimationTime;
 	private int currentAnimation;
 	private Direction currentDirection;
 	private boolean isAnimationRunning;
 	private Vector2Scalbl[] offsetVectors;
 	
+		
 	public AnimationSkeleton(Vector2 a_position) {
 		
-		numberOfSpriteParts = 10;
-		numberOfAnimations = 1;
+		numberOfSpriteParts = PlayerWalking.numberOfSpriteParts;
+		numberOfAnimations = PlayerWalking.numberOfAnimations;
 		currentAnimation = 0;
 		currentDirection = Direction.NORTH;
 		deltaAnimationTime = 0;
@@ -68,203 +44,24 @@ public class AnimationSkeleton {
 		setPosition(a_position);
 	}
 	
-	public void fillSpriteList(String a_nameOfSprite)
-	{
-		int indexOffset = 0;
-		Texture spriteSheet;
-		try {
-			spriteSheet = new Texture(a_nameOfSprite + ".png");
-		} catch (Exception e) {
-			return;
-		}
+	private void fillSpriteList(String a_nameOfSprite){
 		
-		for (int i = 0; i < 2; i++) {
-			indexOffset = 2 * i * numberOfSpriteParts;
-			//NORTH - SOUTH
-			//body
-			spriteList[indexOffset ] = new Sprite(spriteSheet, 24, 64 * i + 0, 40, 23);
-			spriteList[indexOffset ].setOrigin(20, 12);
-			//head
-			spriteList[indexOffset + 1] = new Sprite(spriteSheet, 30, 64 * i + 23, 34, 41);
-			spriteList[indexOffset + 1].setOrigin(17, 10);
-			
-			//LArm
-			spriteList[indexOffset + 2] = new Sprite(spriteSheet, 0, 64 * i + 0, 12, 12);
-			spriteList[indexOffset + 3] = new Sprite(spriteSheet, 0, 64 * i + 12, 12, 11);
-			spriteList[indexOffset + 2].setOrigin(9, 9);
-			spriteList[indexOffset + 3].setOrigin(6, 9);
-	
-			//RArm
-			spriteList[indexOffset + 4] = new Sprite(spriteSheet, 12, 64 * i + 0, 12, 12);
-			spriteList[indexOffset + 5] = new Sprite(spriteSheet, 12, 64 * i + 12, 12, 11);
-			spriteList[indexOffset + 4].setOrigin(4, 9);
-			spriteList[indexOffset + 5].setOrigin(6, 9);
-			
-			//LLeg
-			spriteList[indexOffset + 6] = new Sprite(spriteSheet, 0, 64 * i + 23, 15, 12);
-			spriteList[indexOffset + 7] = new Sprite(spriteSheet, 0, 64 * i + 35, 15, 10);
-			spriteList[indexOffset + 6].setOrigin(8, 9);
-			spriteList[indexOffset + 7].setOrigin(8, 8);
-			
-			//RLeg
-			spriteList[indexOffset + 8] = new Sprite(spriteSheet, 15, 64 * i + 23, 15, 12);
-			spriteList[indexOffset + 9] = new Sprite(spriteSheet, 15, 64 * i + 35, 15, 10);
-			spriteList[indexOffset + 8].setOrigin(8, 9);
-			spriteList[indexOffset + 9].setOrigin(8, 8);
-			
-			
-			//EAST - WEST
-			
-			//body
-			spriteList[indexOffset + 10] = new Sprite(spriteSheet, 64, 64 * i + 23, 24, 20);
-			spriteList[indexOffset + 10].setOrigin(12, 12);
-			//head
-			spriteList[indexOffset + 11] = new Sprite(spriteSheet, 88, 64 * i + 23, 34, 41);
-			spriteList[indexOffset + 11].setOrigin(17, 10);
-			
-			//LArm
-			spriteList[indexOffset + 12] = new Sprite(spriteSheet, 64, 64 * i + 0, 12, 12);
-			spriteList[indexOffset + 13] = new Sprite(spriteSheet, 64, 64 * i + 12, 12, 11);
-			spriteList[indexOffset + 12].setOrigin(6, 9);
-			spriteList[indexOffset + 13].setOrigin(6, 8);
-
-			//RArm
-			spriteList[indexOffset + 14] = new Sprite(spriteSheet, 76, 64 * i + 0, 12, 12);
-			spriteList[indexOffset + 15] = new Sprite(spriteSheet, 76, 64 * i + 12, 12, 11);
-			spriteList[indexOffset + 14].setOrigin(6, 9);
-			spriteList[indexOffset + 15].setOrigin(6, 8);
-			//LLeg
-			spriteList[indexOffset + 16] = new Sprite(spriteSheet, 88, 64 * i + 0, 16, 12);
-			spriteList[indexOffset + 17] = new Sprite(spriteSheet, 88, 64 * i + 12, 16, 10);
-			spriteList[indexOffset + 16].setOrigin(8, 9);
-			spriteList[indexOffset + 17].setOrigin(8, 7);
-			
-			//RLeg
-			spriteList[indexOffset + 18] = new Sprite(spriteSheet, 104, 64 * i + 0, 16, 12);
-			spriteList[indexOffset + 19] = new Sprite(spriteSheet, 104, 64 * i + 12, 16, 10);
-			spriteList[indexOffset + 18].setOrigin(8, 9);
-			spriteList[indexOffset + 19].setOrigin(8, 7);
-			
-		}				
-	}
-	
-	public void fillAnimationTimings(){
-		
-		int animTime = 100;
-		
-		
-		for (int i = 0; i < numberOfAnimations; i++) {
-			for (int j = 0; j < numberOfSpriteParts * 4; j++) {
-				animationStateSets[i][j] = new AnimationStateSet();
-			}
-		}		
-		//north
-		//body
-		animationStateSets[0][0].stateList = new AnimationState[1];
-		animationStateSets[0][0].stateList[0] = new AnimationState(0, 0, 1, 1);
-		//head
-		
-		animationStateSets[0][1].stateList = new AnimationState[1];
-		animationStateSets[0][1].stateList[0] = new AnimationState(0, 0, 1, 1);
-
-		//LArm
-		animationStateSets[0][2].stateList = new AnimationState[3];
-		animationStateSets[0][2].stateList[0] = new AnimationState(0, 0, 1, 0.5f);
-		animationStateSets[0][2].stateList[1] = new AnimationState(animTime, 0, 1, 1);
-		animationStateSets[0][2].stateList[2] = new AnimationState(animTime * 2, 0, 1, 0.5f);
-		
-		animationStateSets[0][3].stateList = new AnimationState[3];
-		animationStateSets[0][3].stateList[0] = new AnimationState(0, 0, 1, 0.5f);
-		animationStateSets[0][3].stateList[1] = new AnimationState(animTime, 0, 1, 1);
-		animationStateSets[0][3].stateList[2] = new AnimationState(animTime * 2, 0, 1, 0.5f);
-		
-		//RArm
-		animationStateSets[0][4].stateList = new AnimationState[3];
-		animationStateSets[0][4].stateList[0] = new AnimationState(0, 0, 1, 1);
-		animationStateSets[0][4].stateList[1] = new AnimationState(animTime, 0, 1, 0.5f);
-		animationStateSets[0][4].stateList[2] = new AnimationState(animTime * 2, 0, 1, 1);
-		
-		animationStateSets[0][5].stateList = new AnimationState[3];
-		animationStateSets[0][5].stateList[0] = new AnimationState(0, 0, 1, 1);
-		animationStateSets[0][5].stateList[1] = new AnimationState(animTime, 0, 1, 0.5f);
-		animationStateSets[0][5].stateList[2] = new AnimationState(animTime * 2, 0, 1, 1);
-		
-		//LLeg
-		animationStateSets[0][6].stateList = new AnimationState[3];
-		animationStateSets[0][6].stateList[0] = new AnimationState(0, 0, 1, 1);
-		animationStateSets[0][6].stateList[1] = new AnimationState(animTime, 0, 1, 0.5f);
-		animationStateSets[0][6].stateList[2] = new AnimationState(animTime * 2, 0, 1, 1);
-		
-		animationStateSets[0][7].stateList = new AnimationState[3];
-		animationStateSets[0][7].stateList[0] = new AnimationState(0, 0, 1, 1);
-		animationStateSets[0][7].stateList[1] = new AnimationState(animTime, 0, 1, 0.5f);
-		animationStateSets[0][7].stateList[2] = new AnimationState(animTime * 2, 0, 1, 1);
-		
-		//RLeg
-		animationStateSets[0][8].stateList = new AnimationState[3];
-		animationStateSets[0][8].stateList[0] = new AnimationState(0, 0, 1, 0.5f);
-		animationStateSets[0][8].stateList[1] = new AnimationState(animTime, 0, 1, 1);
-		animationStateSets[0][8].stateList[2] = new AnimationState(animTime * 2, 0, 1, 0.5f);
-		
-		animationStateSets[0][9].stateList = new AnimationState[3];
-		animationStateSets[0][9].stateList[0] = new AnimationState(0, 0, 1, 0.5f);
-		animationStateSets[0][9].stateList[1] = new AnimationState(animTime, 0, 1, 1);
-		animationStateSets[0][9].stateList[2] = new AnimationState(animTime * 2, 0, 1, 0.5f);
+		PlayerWalking.fillSpriteList(spriteList, a_nameOfSprite);
 
 	}
 	
-	public void setOffsetVectors()
-	{
-		int indexOffset;
+	private void fillAnimationTimings(){
 		
-		for (int i = 0; i < 2; i++) {
-			indexOffset = 2 * i * numberOfSpriteParts;
-			//NORTH-SOUTH
-			//body
-			offsetVectors[indexOffset] = new Vector2Scalbl(18, 19);
-			//head
-			offsetVectors[indexOffset + 1] = new Vector2Scalbl(0, 9);
-			//left arm
-			offsetVectors[indexOffset + 2] = new Vector2Scalbl(-11, 4);
-			offsetVectors[indexOffset + 3] = new Vector2Scalbl(-3, -6);
-			
-			//right arm
-			offsetVectors[indexOffset + 4] = new Vector2Scalbl(12, 4);
-			offsetVectors[indexOffset + 5] = new Vector2Scalbl(2, -6);
-
-			//left leg
-			offsetVectors[indexOffset + 6] = new Vector2Scalbl(-5, -8);
-			offsetVectors[indexOffset + 7] = new Vector2Scalbl(0, -6);
-			
-			//right leg
-			offsetVectors[indexOffset + 8] = new Vector2Scalbl(6, -8);
-			offsetVectors[indexOffset + 9] = new Vector2Scalbl(0, -6);
-			
-			//EAST-WEST
-			//body
-			offsetVectors[indexOffset + 10] = new Vector2Scalbl(18, 20);
-			//head
-			offsetVectors[indexOffset + 11] = new Vector2Scalbl(0, 8); 
-			//left arm
-			offsetVectors[indexOffset + 12] = new Vector2Scalbl(0, 3); 
-			offsetVectors[indexOffset + 13] = new Vector2Scalbl(0, -7);
-			
-			//right arm
-			offsetVectors[indexOffset + 14] = new Vector2Scalbl(0, 3);
-			offsetVectors[indexOffset + 15] = new Vector2Scalbl(0, -7);
-
-			//left leg
-			offsetVectors[indexOffset + 16] = new Vector2Scalbl(0, -9); 
-			offsetVectors[indexOffset + 17] = new Vector2Scalbl(0, -7); 
-			
-			//right leg
-			offsetVectors[indexOffset + 18] = new Vector2Scalbl(0, -9);
-			offsetVectors[indexOffset + 19] = new Vector2Scalbl(0, -7);
-		}
+		PlayerWalking.fillAnimationTimings(animationStateSets);
+	
+	}
+	
+	private void setOffsetVectors(){
+		
+		PlayerWalking.fillOffsetVectors(offsetVectors);
+		
 	}
 		
-	
-	
 	private int getOffsetIndex(Direction a_direction)
 	{		
 		if (a_direction == Direction.EAST)
@@ -278,10 +75,7 @@ public class AnimationSkeleton {
 		return 0;
 	}
 	
-	
-	
-	
-	public void setPosition(Vector2 a_position){
+	private void setPosition(Vector2 a_position){
 		
 		int offsetIndex = getOffsetIndex(currentDirection);
 		
@@ -311,21 +105,7 @@ public class AnimationSkeleton {
 
 		}	
 	}
-		
-	
-	
-	public void update(Direction a_direction)
-	{
-		if (!isAnimationRunning)
-			return;
-		
-		int offsetIndex = getOffsetIndex(a_direction);
-		deltaAnimationTime += (int)(Gdx.graphics.getDeltaTime() * 1000);
-		
-		for (int i = 0; i < numberOfSpriteParts; i++) {
-			updateSpritePartPosition(offsetIndex + i, deltaAnimationTime);
-		}
-	}
+			
 	
 	public void startAnimation(int a_animationNumber, Direction a_direction){
 		deltaAnimationTime = 0;
@@ -334,42 +114,84 @@ public class AnimationSkeleton {
 		isAnimationRunning = true;
 	}
 	
+	public void changeAnimation(int a_animationNumber){
+		if (a_animationNumber == currentAnimation) 
+			return;
+		deltaAnimationTime = 0;
+		currentAnimation = a_animationNumber;		
+	}
+	
 	public void stopAnimation(){
 		isAnimationRunning = false;
 	}
 	
-	private void updateSpritePartPosition(int a_index, int a_deltaAnimationTime){
+	
+	public void update(Direction a_direction, Vector2 a_position)
+	{
+		setPosition(a_position);
+		currentDirection = a_direction;
+		setPosition(a_position);
 
-		if (a_index < 0) {
+		
+		if (!isAnimationRunning)
 			return;
+		
+		int offsetIndex = getOffsetIndex(currentDirection);
+		deltaAnimationTime += (int)(Gdx.graphics.getDeltaTime() * 1000);
+		
+		for (int i = 0; i < numberOfSpriteParts; i++) {
+			updateSpritePartTransformation(offsetIndex + i);
 		}
+	}
+	
+	
+	private void updateSpritePartTransformation(int a_index){
 		
 		int numberOfAnimStates = animationStateSets[currentAnimation][a_index].stateList.length;
-		if (numberOfAnimStates < 2) // no calculation for onyl one entry in the list
+		if (numberOfAnimStates == 0)
 			return;
 		int currentState = 1;
-		float percentOfState = 0; //times hundred. faster calc
+		int currentDeltaTime = 0;
+		float percentOfState = 0;
 		float newRotValue = 0f;
-		float newScaleX = 0f;
-		float newScaleY = 0f;
+		float newScaleX = 1f;
+		float newScaleY = 1f;
 		
-		a_deltaAnimationTime = a_deltaAnimationTime % animationStateSets[currentAnimation][a_index].stateList[numberOfAnimStates - 1].millisecondsFromStart;
+		
+		//if no 
+		if (numberOfAnimStates == 1){
+			setBoneRotation(animationStateSets[currentAnimation][a_index].stateList[0].rotation, a_index);	
+			setBoneScale(animationStateSets[currentAnimation][a_index].stateList[0].scaleX, 
+					animationStateSets[currentAnimation][a_index].stateList[0].scaleY, a_index);
+			return;
+		}	
+		
+		if (currentAnimation == 0 && deltaAnimationTime > walkingAnimationTime) {
+			deltaAnimationTime -= walkingAnimationTime;
+		}
+		
+		currentDeltaTime = deltaAnimationTime % animationStateSets[currentAnimation][a_index].stateList[numberOfAnimStates - 1].millisecondsFromStart;
+		
+		
 		
 		//finding of current state
 		for (int i = 0; i < numberOfAnimStates - 1; i++) {	
-			if(a_deltaAnimationTime > animationStateSets[currentAnimation][a_index].stateList[i].millisecondsFromStart && 
-					a_deltaAnimationTime < animationStateSets[currentAnimation][a_index].stateList[i+1].millisecondsFromStart){
+			if(currentDeltaTime > animationStateSets[currentAnimation][a_index].stateList[i].millisecondsFromStart && 
+					currentDeltaTime <= animationStateSets[currentAnimation][a_index].stateList[i+1].millisecondsFromStart){
 				currentState = i + 1;
 				break;
 			}
 		}
 		
-		a_deltaAnimationTime -= animationStateSets[currentAnimation][a_index].stateList[currentState - 1].millisecondsFromStart;
 		
+		//finds current time within the current state by subtracting the value of the last state
+		currentDeltaTime -= animationStateSets[currentAnimation][a_index].stateList[currentState - 1].millisecondsFromStart;
 		
-		percentOfState = (int)(animationStateSets[currentAnimation][a_index].stateList[currentState].millisecondsFromStart -
+
+		//calulating percent of how far the time is into the current state
+		percentOfState = (float)(animationStateSets[currentAnimation][a_index].stateList[currentState].millisecondsFromStart -
 							animationStateSets[currentAnimation][a_index].stateList[currentState - 1].millisecondsFromStart) / 100;
-		percentOfState = (float)a_deltaAnimationTime / percentOfState / 100;
+		percentOfState = (float)currentDeltaTime / percentOfState / 100;
 		
 		
 		
@@ -377,22 +199,18 @@ public class AnimationSkeleton {
 				animationStateSets[currentAnimation][a_index].stateList[currentState - 1].rotation) * percentOfState;
 		
 		
-		setBoneRotation(newRotValue, a_index);
+		setBoneRotation(animationStateSets[currentAnimation][a_index].stateList[currentState - 1].rotation + newRotValue, a_index);
 		
 		
 		newScaleX = (float)(animationStateSets[currentAnimation][a_index].stateList[currentState].scaleX - 
 				animationStateSets[currentAnimation][a_index].stateList[currentState - 1].scaleX) * percentOfState;
 		newScaleY = (float)(animationStateSets[currentAnimation][a_index].stateList[currentState].scaleY - 
 				animationStateSets[currentAnimation][a_index].stateList[currentState - 1].scaleY) * percentOfState;
-		
-		
+				
 		setBoneScale(animationStateSets[currentAnimation][a_index].stateList[currentState - 1].scaleX + newScaleX, 
 				animationStateSets[currentAnimation][a_index].stateList[currentState - 1].scaleY + newScaleY, a_index);
-//		spriteList[a_index].setScale(animationStateSets[currentAnimation][a_index].stateList[currentState - 1].scaleX + newScaleX, 
-//				animationStateSets[currentAnimation][a_index].stateList[currentState - 1].scaleY + newScaleY);
-	
-
 	}
+	
 	
 	private void setBoneScale(float a_scaleX, float a_scaleY, int a_boneIndex) {
 		
@@ -414,6 +232,7 @@ public class AnimationSkeleton {
 		
 		
 	}
+	
 
 	private void setBoneRotation(float a_rotation, int a_boneIndex) {
 
@@ -433,6 +252,7 @@ public class AnimationSkeleton {
 				offsetVectors[a_boneIndex + 1].setRotationOfBase(a_rotation);
 			}
 	}
+
 	
 	public void draw(SpriteBatch a_batch){
 	
