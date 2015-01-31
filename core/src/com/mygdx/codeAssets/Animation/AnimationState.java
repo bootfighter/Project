@@ -1,4 +1,4 @@
-package com.mygdx.codeAssets.Objects;
+package com.mygdx.codeAssets.Animation;
 
 public class AnimationState {
 	public int millisecondsFromStart;
@@ -12,4 +12,7 @@ public class AnimationState {
 		scaleX = a_scaleX;
 		scaleY = a_scaleY;
 	}
+	
+
+	
 }

@@ -25,6 +25,8 @@ public class RenderHandler {
 	SpriteBatch debugBatch;
 	Matrix4 normalProjection;
 	Vector2 debugPosition;
+	public boolean isDebug;
+
 	
 	public RenderHandler(MapHandler a_mapHandler, PlayerHandler a_playerHandler, SpriteBatch a_batch){
 		mapHandler = a_mapHandler;
@@ -44,10 +46,9 @@ public class RenderHandler {
 	}
 	
 	
-	public boolean isDebug;
 
 	public void zoom(int a_deltaZoom) {
-		if (orthoCamera.zoom + a_deltaZoom * 0.1f <= 1.3f && orthoCamera.zoom + a_deltaZoom * 0.1f >= 0.2f) {
+		if (orthoCamera.zoom + a_deltaZoom * 0.1f <= 1.3f && orthoCamera.zoom + a_deltaZoom * 0.1f >= 0.0f) {
 			orthoCamera.zoom += a_deltaZoom * 0.1f;
 		}
 	}
@@ -61,12 +62,15 @@ public class RenderHandler {
 		
 		orthoCamera.position.set(new Vector2(playerHandler.player.position.x, playerHandler.player.position.y), 0f);
 		orthoCamera.update();
-		currentMap = mapHandler.getCurrentMap();
+		
+		
+		
 		
 		batch.setProjectionMatrix(orthoCamera.combined);
 		
 		
-		currentMap.draw(batch, orthoCamera.zoom, playerHandler.player.position);
+		mapHandler.draw(batch, orthoCamera.zoom, playerHandler.player.position);
+		
 		playerHandler.draw(batch);
 		
 		if (isDebug)

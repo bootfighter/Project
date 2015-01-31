@@ -1,6 +1,7 @@
 package com.mygdx.codeAssets.Objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.GameParameters;
@@ -45,14 +46,14 @@ public abstract class Entity {
 	public void setCollisionRect(CollisionRect collisionRect) {
 		this.collisionRect = collisionRect;
 	}
-	
-	
+		
 	public abstract void update(GameMap a_map);
 	
 	public void move(Vector3 a_amount)	{
 		position.add(a_amount);
 	}
 	
+	public abstract void draw(SpriteBatch a_batch);
 	
 	public void collisionDetection(Vector3 a_moveVector, GameMap a_map)
 	{

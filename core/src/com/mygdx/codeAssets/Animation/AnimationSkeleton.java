@@ -1,10 +1,11 @@
-package com.mygdx.codeAssets.Objects;
+package com.mygdx.codeAssets.Animation;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.codeAssets.AnimationData.PlayerWalking;
+import com.mygdx.codeAssets.AnimationData.PlayerAnimationData;
+import com.mygdx.codeAssets.Objects.Vector2Scalbl;
 import com.mygdx.game.GameParameters.Direction;
 
 
@@ -16,7 +17,7 @@ public class AnimationSkeleton {
 	private AnimationStateSet animationStateSets[][];
 	protected final int numberOfAnimations;
 	private final int numberOfSpriteParts;
-	private final static int walkingAnimationTime = 1500;
+	private final int walkingAnimationTime;
 	private int deltaAnimationTime;
 	private int currentAnimation;
 	private Direction currentDirection;
@@ -26,8 +27,9 @@ public class AnimationSkeleton {
 		
 	public AnimationSkeleton(Vector2 a_position) {
 		
-		numberOfSpriteParts = PlayerWalking.numberOfSpriteParts;
-		numberOfAnimations = PlayerWalking.numberOfAnimations;
+		numberOfSpriteParts = PlayerAnimationData.numberOfSpriteParts;
+		numberOfAnimations = PlayerAnimationData.numberOfAnimations;
+		walkingAnimationTime = PlayerAnimationData.walkingAnimationTime;
 		currentAnimation = 0;
 		currentDirection = Direction.NORTH;
 		deltaAnimationTime = 0;
@@ -38,7 +40,7 @@ public class AnimationSkeleton {
 		offsetVectors = new Vector2Scalbl[numberOfSpriteParts * 4];
 
 		
-		fillSpriteList("Armors/DebugArmor/DebugArmor");
+		fillSpriteList("Armors/DebugArmor/DebugArmor_Color");
 		fillAnimationTimings();
 		setOffsetVectors();			
 		setPosition(a_position);
@@ -46,19 +48,19 @@ public class AnimationSkeleton {
 	
 	private void fillSpriteList(String a_nameOfSprite){
 		
-		PlayerWalking.fillSpriteList(spriteList, a_nameOfSprite);
+		PlayerAnimationData.fillSpriteList(spriteList, a_nameOfSprite);
 
 	}
 	
 	private void fillAnimationTimings(){
 		
-		PlayerWalking.fillAnimationTimings(animationStateSets);
+		PlayerAnimationData.fillAnimationTimings(animationStateSets);
 	
 	}
 	
 	private void setOffsetVectors(){
 		
-		PlayerWalking.fillOffsetVectors(offsetVectors);
+		PlayerAnimationData.fillOffsetVectors(offsetVectors);
 		
 	}
 		
@@ -128,7 +130,7 @@ public class AnimationSkeleton {
 	
 	public void update(Direction a_direction, Vector2 a_position)
 	{
-		setPosition(a_position);
+		
 		currentDirection = a_direction;
 		setPosition(a_position);
 

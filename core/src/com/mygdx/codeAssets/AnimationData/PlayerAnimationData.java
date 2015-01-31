@@ -2,11 +2,11 @@ package com.mygdx.codeAssets.AnimationData;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.mygdx.codeAssets.Objects.AnimationState;
-import com.mygdx.codeAssets.Objects.AnimationStateSet;
+import com.mygdx.codeAssets.Animation.AnimationState;
+import com.mygdx.codeAssets.Animation.AnimationStateSet;
 import com.mygdx.codeAssets.Objects.Vector2Scalbl;
 
-public class PlayerWalking {
+public class PlayerAnimationData {
 
 	public final static int walkingAnimationTime = 250;
 	public final static int idleAnimationTime = 2000;
@@ -102,8 +102,7 @@ public class PlayerWalking {
 		
 		for (int i = 0; i < numberOfAnimations; i++) {
 			for (int j = 0; j < numberOfSpriteParts * 4; j++) {
-				a_animationStateSets[i][j] = new AnimationStateSet();
-				a_animationStateSets[i][j].stateList = new AnimationState[0];
+				a_animationStateSets[i][j] = new AnimationStateSet(0);
 			}
 		}	
 		//// »»»»»»»»»»»»»»»»»»»»»»»» WALKING ANIMATION ««««««««««««««««««««««««

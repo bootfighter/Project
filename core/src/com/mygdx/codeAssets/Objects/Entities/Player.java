@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.codeAssets.Objects.AnimationSkeleton;
+import com.mygdx.codeAssets.Animation.AnimationSkeleton;
 import com.mygdx.codeAssets.Objects.CollisionRect;
 import com.mygdx.codeAssets.Objects.Entity;
 import com.mygdx.codeAssets.Objects.GameMap;

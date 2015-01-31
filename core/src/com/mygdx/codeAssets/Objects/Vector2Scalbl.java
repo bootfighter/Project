@@ -10,6 +10,8 @@ public class Vector2Scalbl extends Vector2{
 	private float rotation;
 	private float scaleX;
 	private float scaleY;
+	private float globalScaleX;
+	private float globalScaleY;
 	
 	
 	public Vector2Scalbl(int a_x, int a_y) {
@@ -20,8 +22,16 @@ public class Vector2Scalbl extends Vector2{
 		rotation = 0;
 		scaleX = 1;
 		scaleY = 1;
+		globalScaleX = 1;
+		globalScaleY = 1;
 	}
 
+	public void setGlobalScale(float a_globalScaleX, float a_globalScaleY) {
+		globalScaleX = a_globalScaleX;
+		globalScaleY = a_globalScaleY;
+		updateTransformed();
+	}
+	
 	public void setScaleFromBase(float a_scaleX, float a_scaleY)
 	{
 		scaleX = a_scaleX;
@@ -35,8 +45,8 @@ public class Vector2Scalbl extends Vector2{
 	}
 	private void updateTransformed(){
 		tmp = new Vector2(x, y);
-		tmp.x *= scaleX;
-		tmp.y *= scaleY;
+		tmp.x *= globalScaleX * scaleX;
+		tmp.y *= globalScaleY * scaleY;
 		tmp.rotate(rotation);
 		transformedX = tmp.x;
 		transformedY = tmp.y;
