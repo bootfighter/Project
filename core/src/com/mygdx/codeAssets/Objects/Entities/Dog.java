@@ -15,7 +15,7 @@ public class Dog extends Entity{
 		super();
 		animBoneHandler = new AnimationBoneHandler("Dog");
 		
-		position.x = 30;
+		position.x = 70;
 		position.y = 30;
 		
 		animBoneHandler.startAnimation(0, Direction.NORTH);

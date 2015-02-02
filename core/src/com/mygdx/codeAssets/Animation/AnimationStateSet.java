@@ -9,6 +9,10 @@ public class AnimationStateSet {
 			stateListLength = a_numberOfAnimationStates;
 		}
 		
+		public int getAnimationTime(){
+			return stateList[stateListLength - 1].millisecondsFromStart;
+		}
+		
 		public int getDeltaMilliseconds(int a_index){
 			if(!isInBounds(a_index))
 				return -1;
