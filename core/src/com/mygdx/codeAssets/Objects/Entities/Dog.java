@@ -2,6 +2,7 @@ package com.mygdx.codeAssets.Objects.Entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.codeAssets.AnimationData.DogAnimationData;
 import com.mygdx.codeAssets.Handlers.AnimationBoneHandler;
 import com.mygdx.codeAssets.Objects.Entity;
 import com.mygdx.codeAssets.Objects.GameMap;
@@ -13,7 +14,7 @@ public class Dog extends Entity{
 	
 	public Dog() {
 		super();
-		animBoneHandler = new AnimationBoneHandler("Dog");
+		animBoneHandler = new AnimationBoneHandler(DogAnimationData.getAnimationStructureNorth(), null, null, null);
 		
 		position.x = 70;
 		position.y = 30;

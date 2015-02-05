@@ -46,7 +46,7 @@ public class Game extends ApplicationAdapter {
 		renderHandler.draw();
 		mapHandler.update();
 		playerHandler.update();
-		
+
 	}
 	
 	@Override

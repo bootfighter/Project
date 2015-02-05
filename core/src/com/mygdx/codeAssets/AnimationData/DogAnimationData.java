@@ -13,7 +13,7 @@ public class DogAnimationData {
 	public final static int numberOfAnimations = 2;
 	
 	
-	public static AnimationBone getAnimationStructurN(){
+	public static AnimationBone getAnimationStructureNorth(){
 		// »» NORTH ««
 		//body
 		Texture currentTexture = new Texture("Animals/dog.png");
@@ -164,4 +164,20 @@ public class DogAnimationData {
 		return body;
 	}
 
+	public static AnimationBone getAnimationStructureEast(){
+		//TODO
+		return null;
+	}
+
+	public static AnimationBone getAnimationStructureSouth(){
+		//TODO
+		return null;
+	}
+	
+	public static AnimationBone getAnimationStructureWest(){
+		//TODO
+		return null;
+	}
+
+	
 }

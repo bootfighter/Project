@@ -138,8 +138,10 @@ public class AnimationBone {
 	}
 	
 	public void reset(){
-		offsetVector.setRotationOfBase(0);
-		offsetVector.setScaleFromBase(1, 1);
+		rotate(0);
+		scale(1, 1);
+//		offsetVector.setRotationOfBase(0);
+//		offsetVector.setScaleFromBase(1, 1);
 		for (AnimationBone animationBone : animationBoneChilds) {
 			animationBone.reset();
 		}
@@ -155,6 +157,7 @@ public class AnimationBone {
 		offsetVector.setGlobalScale(a_globalScaleX, a_globalScaleY);
 		for (AnimationBone animationBone : animationBoneChilds) {
 			animationBone.setGlobalScale(a_globalScaleX, a_globalScaleY);
+			animationBone.scale(1, 1);
 		}
 		
 	}

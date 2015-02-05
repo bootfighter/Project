@@ -1,5 +1,6 @@
 package com.mygdx.codeAssets.Handlers;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.Weapon;
@@ -20,6 +21,8 @@ public class PlayerHandler {
 		player = new Player();
 		player.position = new Vector3(30, 30, 0);
 		
+		
+		
 		weapon  = new SapphireDagger();
 	}
 	
@@ -33,7 +36,6 @@ public class PlayerHandler {
 	
 	public void draw(SpriteBatch a_batch) {
 		
-		player.draw(a_batch);
 
 		a_batch.begin();
 		
@@ -42,10 +44,13 @@ public class PlayerHandler {
 		//		die position werden mit animation verändert. keine ahnung was hier noch kommt ^^ vllt ein skript?
 //		a_batch.draw(player.getTexture(), player.position.x, player.position.y);
 		
-		
-		weapon.getTexture().setPosition(player.position.x, player.position.y);
-		weapon.getTexture().draw(a_batch);
+//		a_batch.draw(new Texture("missingtxt.png"), player.position.x, player.position.y);
+//		weapon.getTexture().setPosition(player.position.x, player.position.y);
+//		weapon.getTexture().draw(a_batch);
 		
 		a_batch.end();
+		
+		player.draw(a_batch);
+
 	}
 }

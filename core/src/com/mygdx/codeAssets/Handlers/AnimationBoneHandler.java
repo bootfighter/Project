@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.codeAssets.Animation.AnimationBone;
-import com.mygdx.codeAssets.AnimationData.DogAnimationData;
 import com.mygdx.game.GameParameters.Direction;
 
 public class AnimationBoneHandler {
@@ -16,40 +15,53 @@ public class AnimationBoneHandler {
 	private int currentAnimationTimeInverval;
 	private Direction currentDirection;
 	private boolean isAnimationRunning;
+	
+	private AnimationBone currentBoneHead;
 	private AnimationBone animationBoneHeadNorth;
 	private AnimationBone animationBoneHeadEast;
 	private AnimationBone animationBoneHeadSouth;
 	private AnimationBone animationBoneHeadWest;
-	private ArrayList<AnimationBone> drawOrderList;
+	private ArrayList<AnimationBone> currentDrawOrderList;
+	private ArrayList<AnimationBone> drawOrderListNorth;
+	private ArrayList<AnimationBone> drawOrderListEast;
+	private ArrayList<AnimationBone> drawOrderListSouth;
+	private ArrayList<AnimationBone> drawOrderListWest;
+
 
 	
-	public AnimationBoneHandler(String a_entityName) {
+	public AnimationBoneHandler(AnimationBone a_headNorth,  AnimationBone a_headEast, AnimationBone a_headSouth,  AnimationBone a_headWest) {
 		deltaAnimationTime = 0;
 		currentAnimation = 0;
 		currentDirection = Direction.NORTH;
 		currentAnimationTimeInverval = 0;
 		isAnimationRunning = false;
-		getAnimationBoneHead(a_entityName);
 		
-		drawOrderList = new ArrayList<AnimationBone>();
-		animationBoneHeadNorth.getDrawOrderList(drawOrderList);
+		animationBoneHeadNorth = a_headNorth;
+		animationBoneHeadEast = a_headEast;
+		animationBoneHeadSouth = a_headSouth;
+		animationBoneHeadWest = a_headWest;
+		
+		currentDrawOrderList = new ArrayList<AnimationBone>();
+		drawOrderListNorth = new ArrayList<AnimationBone>();
+		drawOrderListEast = new ArrayList<AnimationBone>();
+		drawOrderListSouth = new ArrayList<AnimationBone>();
+		drawOrderListWest = new ArrayList<AnimationBone>();
+		
+		animationBoneHeadNorth.getDrawOrderList(drawOrderListNorth);
+		animationBoneHeadEast.getDrawOrderList(drawOrderListEast);
+		animationBoneHeadSouth.getDrawOrderList(drawOrderListSouth);
+		animationBoneHeadWest.getDrawOrderList(drawOrderListWest);
+		
+		currentDrawOrderList = drawOrderListNorth;
+		currentBoneHead = animationBoneHeadNorth;
 		
 	}
-	
-	private void getAnimationBoneHead(String a_entityName)
-	{
-		if (a_entityName.equals("Player"))
-			return;
-		if (a_entityName.equals("Dog"))
-			animationBoneHeadNorth = DogAnimationData.getAnimationStructurN();
-		return;
-	}
-	
+
 	public void setGlobalScale(float a_globalScaleX, float a_globalScaleY){
 		animationBoneHeadNorth.setGlobalScale(a_globalScaleX, a_globalScaleY);
-//		animationBoneHeadEast.setGlobalScale(a_globalScaleX, a_globalScaleY);
-//		animationBoneHeadSouth.setGlobalScale(a_globalScaleX, a_globalScaleY);
-//		animationBoneHeadWest.setGlobalScale(a_globalScaleX, a_globalScaleY);
+		animationBoneHeadEast.setGlobalScale(a_globalScaleX, a_globalScaleY);
+		animationBoneHeadSouth.setGlobalScale(a_globalScaleX, a_globalScaleY);
+		animationBoneHeadWest.setGlobalScale(a_globalScaleX, a_globalScaleY);
 	}
 	
 	public void update(Vector2 a_position, Direction a_currentDirection) {
@@ -70,20 +82,26 @@ public class AnimationBoneHandler {
 		
 		switch (currentDirection) {
 		case NORTH:
-			animationBoneHeadNorth.update(a_position, (int)deltaAnimationTime, currentAnimation);
+			currentBoneHead = animationBoneHeadNorth;
+			currentDrawOrderList = drawOrderListNorth;
 			break;
 		case EAST:
-			//TODO
+			currentBoneHead = animationBoneHeadEast;
+			currentDrawOrderList = drawOrderListEast;
 			break;
 		case SOUTH:
-			//TODO
+			currentBoneHead = animationBoneHeadSouth;
+			currentDrawOrderList = drawOrderListSouth;
 			break;
 		case WEST:
-			//TODO
+			currentBoneHead = animationBoneHeadWest;
+			currentDrawOrderList = drawOrderListWest;
 			break;
 		default:
 			break;
 		}
+		
+		currentBoneHead.update(a_position, (int)deltaAnimationTime, currentAnimation);
 	}
 	
 	public void startAnimation(int a_animationNumber, Direction a_direction){
@@ -110,29 +128,20 @@ public class AnimationBoneHandler {
 		animationBoneHeadWest.reset();
 	}
 	
+	public void reset(){
+		animationBoneHeadNorth.reset();
+		animationBoneHeadEast.reset();
+		animationBoneHeadSouth.reset();
+		animationBoneHeadWest.reset();		
+	}
+	
 	private void setAnimationTimeInverval(){
-		switch (currentDirection) {
-		case NORTH:
-			currentAnimationTimeInverval = animationBoneHeadNorth.getAnimationTime(currentAnimation);
-			break;
-		case EAST:
-			currentAnimationTimeInverval = animationBoneHeadEast.getAnimationTime(currentAnimation);
-			break;
-		case SOUTH:
-			currentAnimationTimeInverval = animationBoneHeadSouth.getAnimationTime(currentAnimation);
-			break;
-		case WEST:
-			currentAnimationTimeInverval = animationBoneHeadWest.getAnimationTime(currentAnimation);
-			break;
-		default:
-			currentAnimationTimeInverval = -1;
-			break;
-		}
+		currentAnimationTimeInverval = currentBoneHead.getAnimationTime(currentAnimation);
 	}
 	
 	public void draw(SpriteBatch a_batch){
 		
-		for (AnimationBone animationBone : drawOrderList) {
+		for (AnimationBone animationBone : currentDrawOrderList) {
 			animationBone.draw(a_batch);
 		}
 	}

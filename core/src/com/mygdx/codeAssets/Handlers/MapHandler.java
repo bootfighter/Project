@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.GameMap;
 import com.mygdx.codeAssets.Objects.Tile;
-import com.mygdx.codeAssets.Objects.Entities.Dog;
 
 public class MapHandler {
 	
@@ -34,9 +33,6 @@ public class MapHandler {
 
 		currentMap.fillWithTile(dirt, new Vector3(8, 8, 0), new Vector3(24, 24, 0));
 		
-		
-		entityHandler.addEntity(new Dog());
-
 	}
 	
 	
