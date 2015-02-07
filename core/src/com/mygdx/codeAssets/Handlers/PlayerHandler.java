@@ -1,6 +1,5 @@
 package com.mygdx.codeAssets.Handlers;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.Weapon;
@@ -12,7 +11,7 @@ public class PlayerHandler {
 
 
 	private MapHandler mapHandler;
-	Player player;
+	public Player player;
 	Weapon weapon;
 	
 	
@@ -35,21 +34,7 @@ public class PlayerHandler {
 	}
 	
 	public void draw(SpriteBatch a_batch) {
-		
-
-		a_batch.begin();
-		
-		//TODO: Multi equipment animation and rendering
-		//		Jedes item hat eine texture die an einer position zeichnet wird
-		//		die position werden mit animation verändert. keine ahnung was hier noch kommt ^^ vllt ein skript?
-//		a_batch.draw(player.getTexture(), player.position.x, player.position.y);
-		
-//		a_batch.draw(new Texture("missingtxt.png"), player.position.x, player.position.y);
-//		weapon.getTexture().setPosition(player.position.x, player.position.y);
-//		weapon.getTexture().draw(a_batch);
-		
-		a_batch.end();
-		
+				
 		player.draw(a_batch);
 
 	}

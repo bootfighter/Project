@@ -26,16 +26,13 @@ public class Player extends Entity{
 	
 	
 	public Player() {
-		super();
+		super(new Vector3(0,0,0), new Texture("player.png"), new CollisionRect(new Vector2(0, 0), new Vector2(16, 16)));
 		facingDirection = new Vector2(0, 0);
 		moveVector = new Vector3(0,0,0);
 		currentDir = Direction.NORTH;
 		walkSpeed = 100;
 		sprintSpeed = 500;
 		sprinting = false;
-		texture = new Texture("player.png");
-		collisionRect = new CollisionRect(new Vector2(0, 0), new Vector2(16, 16));
-
 		
 		animBoneHandler = new AnimationBoneHandler(PlayerAnimationData.getAnimationStructureNorth(),
 													PlayerAnimationData.getAnimationStructureEast(),

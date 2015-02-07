@@ -10,6 +10,7 @@ public abstract class Entity {
 
 	public Vector3 position;
 	public Vector3 tilePosition;
+	public final Vector2 collisionDimension;
 	protected Vector2 direction;
 	protected Texture texture;
 	protected CollisionRect collisionRect;
@@ -21,6 +22,18 @@ public abstract class Entity {
 		direction = new Vector2(0,0);
 		texture = new Texture("missingtxt.png");
 		collisionRect = new CollisionRect();
+		collisionDimension = new Vector2(Math.abs(collisionRect.point2.x - collisionRect.point1.x),
+										Math.abs(collisionRect.point2.x - collisionRect.point1.x));
+	}
+	
+	public Entity(Vector3 a_position, Texture a_texture, CollisionRect a_collisionRect){
+		position = a_position;
+		tilePosition = Tile.convertWorldSpaceToTileSpace(position);
+		direction = new Vector2(0,0);
+		texture = a_texture;
+		collisionRect = a_collisionRect;
+		collisionDimension= new Vector2(Math.abs(collisionRect.point2.x - collisionRect.point1.x),
+										Math.abs(collisionRect.point2.x - collisionRect.point1.x));
 	}
 
 	public Vector2 getDirection() {
@@ -34,7 +47,7 @@ public abstract class Entity {
 	public Texture getTexture() {
 		return texture;
 	}
-
+	
 	public void setTexture(Texture texture) {
 		this.texture = texture;
 	}
