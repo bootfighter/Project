@@ -50,17 +50,16 @@ public class GameStateMachine {
 		switch (currentGameState) {
 		case MAINMENU:
 		
-
+			break;
 		case INGAME:
 			currentPlayerHandler.update();
 			currentMapHandler.update();
-			
+			break;
 		default:
-			currentRenderHandler.draw();			
 			break;
 		}
 		
-		
+		currentRenderHandler.draw();
 		
 		Gdx.input.setInputProcessor(currentEventHandler);
 

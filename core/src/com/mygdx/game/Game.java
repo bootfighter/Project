@@ -21,7 +21,7 @@ public class Game extends ApplicationAdapter {
 		batch = new SpriteBatch();
 				
 
-		gameStateMachine = new GameStateMachine(GameState.INGAME, batch);
+		gameStateMachine = new GameStateMachine(GameState.MAINMENU, batch);
 		
 	}
 

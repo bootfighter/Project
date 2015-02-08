@@ -63,7 +63,7 @@ public class IngameEventHandler extends EventHandler {
 			break;
 
 		case Keys.F1:
-			renderHandler.isDebug = !renderHandler.isDebug; 
+			userInterfaceHandler.isDebug = !userInterfaceHandler.isDebug;
 		default:
 			break;
 		}

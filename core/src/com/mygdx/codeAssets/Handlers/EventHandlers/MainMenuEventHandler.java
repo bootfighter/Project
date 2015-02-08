@@ -26,16 +26,21 @@ public class MainMenuEventHandler extends EventHandler {
 	
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		userInterfaceHandler.touchDown(screenX, screenY, button);
+
 		return super.touchDown(screenX, screenY, pointer, button);
 	}
 	
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		userInterfaceHandler.touchUp(screenX, screenY, button);
+
 		return super.touchUp(screenX, screenY, pointer, button);
 	}
 	
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
+		userInterfaceHandler.mouseMoved(screenX, screenY);
 		return super.mouseMoved(screenX, screenY);
 	}
 	
