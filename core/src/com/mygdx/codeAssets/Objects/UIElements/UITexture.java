@@ -35,4 +35,10 @@ public class UITexture extends UIElement{
 		
 		a_batch.end();
 	}
+	
+	@Override
+	public void resize(int a_width, int a_height) {
+		// TODO Auto-generated method stub
+		
+	}
 }

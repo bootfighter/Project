@@ -25,7 +25,7 @@ public class RenderHandler {
 
 	
 	public void resize(int a_XSize, int a_YSize) {
-		userInterfaceHandler.resize();
+		userInterfaceHandler.resize(a_XSize, a_YSize);
 		orthoCamera.viewportHeight = a_YSize;
 		orthoCamera.viewportWidth = a_XSize;
 	}

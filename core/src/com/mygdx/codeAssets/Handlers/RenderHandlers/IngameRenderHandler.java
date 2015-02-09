@@ -35,8 +35,8 @@ public class IngameRenderHandler extends RenderHandler{
 				 playerHandler.player.position.y + playerHandler.player.collisionDimension.y / 2 ), 0f);
 		super.draw();
 				
-		userInterfaceHandler.draw();
 		mapHandler.draw(batch, orthoCamera.zoom, playerHandler.player.position);
+		userInterfaceHandler.draw();
 		playerHandler.draw(batch);		
 	}
 	

@@ -34,13 +34,19 @@ public class MainMenuUIHandler extends UserInterfaceHandler{
 		
 	}
 	
+	private void setPositions(int a_width, int a_height){
+		elements[0].setCenter(new Vector2(a_width / 2, a_height / 2 + 60));
+		elements[1].setCenter(new Vector2(a_width / 2, a_height / 2));
+		elements[2].setCenter(new Vector2(a_width / 2, a_height / 2 - 60));
+		elements[3].setCenter(new Vector2(a_width / 2, a_height / 2 + 160));
+		
+	}
+	
 	@Override
-	public void resize() {
-		
-		//TODO: resize every UI element to right position (repositioning)
-		//"magnet" sticking to left / right / top / bottom
-		
-		super.resize();
+	public void resize(int a_width, int a_height) {
+
+		setPositions(a_width, a_height);
+		super.resize(a_width, a_height);
 	}
 	
 

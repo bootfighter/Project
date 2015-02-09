@@ -95,6 +95,7 @@ public class GameStateMachine {
 	}
 	
 	public void resize(int width, int height) {
+		currentUserInterfaceHandler.resize(width, height);
 		currentRenderHandler.resize(width, height);
 	}
 }

@@ -87,5 +87,11 @@ public class UIButton extends UIElement{
 		}
 		isHover = true;
 	}
-
+	
+	@Override
+	public void resize(int a_width, int a_height) {
+		
+		
+		
+	}
 }

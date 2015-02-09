@@ -43,9 +43,8 @@ public abstract class UserInterfaceHandler {
 		}
 	}
 	
-	public void resize(){
+	public void resize(int a_width, int a_height){
 		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
 		userInterfaceBatch.setProjectionMatrix(normalProjection);
-		
 	}
 }

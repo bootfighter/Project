@@ -32,4 +32,6 @@ public abstract class UIElement {
 	public abstract void mouseMoved(int a_screenX, int a_screenY);
 	
 	public abstract void draw(SpriteBatch a_batch);
+	
+	public abstract void resize(int a_width, int a_height);
 }
