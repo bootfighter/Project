@@ -3,6 +3,7 @@ package com.mygdx.codeAssets.Handlers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
+import com.mygdx.codeAssets.Objects.GameStateMutable;
 import com.mygdx.codeAssets.Objects.UIElement;
 
 public abstract class UserInterfaceHandler {
@@ -11,11 +12,13 @@ public abstract class UserInterfaceHandler {
 	protected UIElement[] elements;
 	protected SpriteBatch userInterfaceBatch;
 	protected Matrix4 normalProjection;
+	protected GameStateMutable currentGameState;
 	public boolean isDebug;
 	
-	public UserInterfaceHandler() {
+	public UserInterfaceHandler(GameStateMutable a_currentGameState) {
 		userInterfaceBatch = new SpriteBatch();
 		elements = new UIElement[0];
+		currentGameState = a_currentGameState;
 		isDebug = false;
 	}
 	
@@ -43,7 +46,10 @@ public abstract class UserInterfaceHandler {
 		}
 	}
 	
+	protected abstract void setElementPositions(int a_width, int a_height);
+	
 	public void resize(int a_width, int a_height){
+		setElementPositions(a_width, a_height);
 		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
 		userInterfaceBatch.setProjectionMatrix(normalProjection);
 	}

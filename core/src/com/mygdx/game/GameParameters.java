@@ -2,17 +2,7 @@ package com.mygdx.game;
 
 public class GameParameters {
 	
-	
-	//NOT final version of all gamestates, these are just a collection of possible states
-	public static enum GameState{
-		MAINMENU,
-		INGAMEMENU,
-		INGAME, 
-		INVENTORY, 
-		NPCINTERACTION,
-		CUTSCENE
-	}
-	
+		
 	public static enum Direction {
 		NORTH,
 		EAST,

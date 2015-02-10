@@ -6,7 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.codeAssets.GameStateMachine;
-import com.mygdx.game.GameParameters.GameState;
+import com.mygdx.codeAssets.Objects.GameStateMutable;
+import com.mygdx.codeAssets.Objects.GameStateMutable.GameState;
 
 
 public class Game extends ApplicationAdapter {
@@ -14,15 +15,14 @@ public class Game extends ApplicationAdapter {
 	
 	GameStateMachine gameStateMachine;
 
-
+	GameStateMutable gameState;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-				
-
-		gameStateMachine = new GameStateMachine(GameState.MAINMENU, batch);
+		gameState = new GameStateMutable(GameState.MAINMENU);
 		
+		gameStateMachine = new GameStateMachine(gameState, batch);
 	}
 
 	

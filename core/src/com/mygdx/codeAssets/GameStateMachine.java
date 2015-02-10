@@ -13,7 +13,8 @@ import com.mygdx.codeAssets.Handlers.RenderHandlers.IngameRenderHandler;
 import com.mygdx.codeAssets.Handlers.RenderHandlers.MainMenuRenderHandler;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandlers.IngameUIHandler;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandlers.MainMenuUIHandler;
-import com.mygdx.game.GameParameters.GameState;
+import com.mygdx.codeAssets.Objects.GameStateMutable;
+import com.mygdx.codeAssets.Objects.GameStateMutable.GameState;
 
 public class GameStateMachine {
 
@@ -25,29 +26,31 @@ public class GameStateMachine {
 	private RenderHandler currentRenderHandler;
 	private UserInterfaceHandler currentUserInterfaceHandler;
 	
-	private GameState currentGameState;
+	private GameStateMutable currentGameState;
+	private GameState prevGameState;
 	
-	public GameStateMachine(GameState a_currentGameState, SpriteBatch a_batch) {
+	public GameStateMachine(GameStateMutable a_currentGameState, SpriteBatch a_batch) {
 		batch = a_batch;
-		setCurrentGameState(a_currentGameState);
-	}
-	
-	public GameState getCurrentGameState() {
-		return currentGameState;
-	}
-	
-	public void setCurrentGameState(GameState a_newGameState){
-		if (a_newGameState == currentGameState)
-			return;
-		currentGameState = a_newGameState;
+		currentGameState = a_currentGameState;
 		updateHandlers();
-		Gdx.input.setInputProcessor(currentEventHandler);
 	}
 	
+	
+	private void updateGameState(){
+		if (prevGameState == currentGameState.gameState)
+			return;
+		updateHandlers();
+		
+		Gdx.input.setInputProcessor(currentEventHandler);
+		
+		prevGameState = currentGameState.gameState;
+	}
 	
 	public void update(){
 		
-		switch (currentGameState) {
+		updateGameState();
+		
+		switch (currentGameState.gameState) {
 		case MAINMENU:
 		
 			break;
@@ -63,16 +66,13 @@ public class GameStateMachine {
 		
 		Gdx.input.setInputProcessor(currentEventHandler);
 
-	}
-	
+	}	
 	
 	private void updateHandlers(){
-		
-		
-		
-		switch (currentGameState) {
+
+		switch (currentGameState.gameState) {
 		case MAINMENU:
-			currentUserInterfaceHandler = new MainMenuUIHandler();
+			currentUserInterfaceHandler = new MainMenuUIHandler(currentGameState);
 			currentRenderHandler = new MainMenuRenderHandler(currentUserInterfaceHandler, batch);
 			currentEventHandler = new MainMenuEventHandler(currentRenderHandler, currentUserInterfaceHandler);
 			break;
@@ -81,7 +81,7 @@ public class GameStateMachine {
 			
 			currentMapHandler = new MapHandler();
 			currentPlayerHandler = new PlayerHandler(currentMapHandler);
-			currentUserInterfaceHandler = new IngameUIHandler(currentPlayerHandler);
+			currentUserInterfaceHandler = new IngameUIHandler(currentPlayerHandler, currentGameState);
 			currentRenderHandler = new IngameRenderHandler(currentMapHandler, currentPlayerHandler, currentUserInterfaceHandler, batch);
 			currentEventHandler = new IngameEventHandler(currentMapHandler, currentPlayerHandler, currentRenderHandler, currentUserInterfaceHandler);
 			

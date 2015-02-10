@@ -17,12 +17,14 @@ public class Tile {
 	public Tile(Texture a_texture, ArrayList<CollisionRect> a_collision_boxes){
 		texture = a_texture;
 		collision_boxes = a_collision_boxes;
+		
 	}
 	
 
 	public Tile(Texture a_texture, boolean a_is_solid){
 		texture = a_texture;
 		collision_boxes = new ArrayList<CollisionRect>();
+		
 		if (a_is_solid)
 			collision_boxes.add(new CollisionRect(new Vector2(0, 0), new Vector2(tileSize, tileSize)));
 	}

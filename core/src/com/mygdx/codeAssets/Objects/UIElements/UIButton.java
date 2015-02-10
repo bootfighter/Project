@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.codeAssets.Objects.UIElement;
 
 public class UIButton extends UIElement{
@@ -14,10 +13,9 @@ public class UIButton extends UIElement{
 	private BitmapFont.TextBounds bounds;
 	private BitmapFont font;
 	private String text;
-	private boolean isHover;
-	private boolean isPressed;
+
 	
- 	public UIButton(String a_buttonName, String a_buttonText, Vector2 a_position, int a_buttonLenght, BitmapFont a_font) {
+ 	public UIButton(String a_buttonName, String a_buttonText, BitmapFont a_font) {
 		
 		super();
 		try{
@@ -29,14 +27,10 @@ public class UIButton extends UIElement{
 		}
 		width = texture.getWidth();
 		height = texture.getHeight();
-		position = a_position;
 		
 		text = a_buttonText;
 		font = a_font;
 		bounds = new BitmapFont.TextBounds(font.getBounds(text));
-		
-		isHover = false;
-		isPressed = false;
 	}
 	
 	
@@ -59,13 +53,11 @@ public class UIButton extends UIElement{
 	@Override
 	public void touchDown(int a_screenX, int a_screenY, int a_button) {
 		
-		System.out.println(a_screenX + " | " + a_screenY + " | " + position);
 		
 		if (!isHover) //mouse is not over element
 			return;
 		isPressed = true;
-		
-		
+
 	}
 
 

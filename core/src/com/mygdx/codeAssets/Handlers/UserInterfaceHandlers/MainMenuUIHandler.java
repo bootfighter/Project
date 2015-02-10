@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandler;
+import com.mygdx.codeAssets.Objects.GameStateMutable;
+import com.mygdx.codeAssets.Objects.GameStateMutable.GameState;
 import com.mygdx.codeAssets.Objects.UIElement;
 import com.mygdx.codeAssets.Objects.UIElements.UIButton;
 import com.mygdx.codeAssets.Objects.UIElements.UITexture;
@@ -12,8 +14,8 @@ import com.mygdx.codeAssets.Objects.UIElements.UITexture;
 public class MainMenuUIHandler extends UserInterfaceHandler{
 
 	
-	public MainMenuUIHandler() {
-		super(); 
+	public MainMenuUIHandler(GameStateMutable a_currentGameState) {
+		super(a_currentGameState); 
 		elements = new UIElement[4];
 
 		initButtons();
@@ -22,19 +24,17 @@ public class MainMenuUIHandler extends UserInterfaceHandler{
 	
 	private void initButtons(){
 		BitmapFont font = new BitmapFont(Gdx.files.internal("Fonts/MenuFont.fnt"));
-		elements[0] = new UIButton("MenuButton", "Hallo test", new Vector2(30, 30), 300, font);
-		elements[1] = new UIButton("MenuButton", "Du hast keine Hose ", new Vector2(30, 130), 300, font);
-		elements[2] = new UIButton("MenuButton", "Da test", new Vector2(30, 230), 300, font);
+		int width = Gdx.graphics.getWidth();
+		int height = Gdx.graphics.getHeight();
+		elements[0] = new UIButton("MenuButton", "Hallo test", font);
+		elements[1] = new UIButton("MenuButton", "Du hast keine Hose ", font);
+		elements[2] = new UIButton("MenuButton", "Da test", font);
 		elements[3] = new UITexture(new Texture("UIElements/Title.png"));
-		
-		elements[0].setCenter(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 + 60));
-		elements[1].setCenter(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2));
-		elements[2].setCenter(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 - 60));
-		elements[3].setCenter(new Vector2(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 + 160));
-		
+
+		setElementPositions(width, height);		
 	}
 	
-	private void setPositions(int a_width, int a_height){
+	protected void setElementPositions(int a_width, int a_height){
 		elements[0].setCenter(new Vector2(a_width / 2, a_height / 2 + 60));
 		elements[1].setCenter(new Vector2(a_width / 2, a_height / 2));
 		elements[2].setCenter(new Vector2(a_width / 2, a_height / 2 - 60));
@@ -43,12 +43,17 @@ public class MainMenuUIHandler extends UserInterfaceHandler{
 	}
 	
 	@Override
-	public void resize(int a_width, int a_height) {
-
-		setPositions(a_width, a_height);
+	public void resize(int a_width, int a_height) {		
 		super.resize(a_width, a_height);
 	}
 	
-
+	@Override
+	public void draw() {
+	
+		if (elements[1].isPressed()) {
+			currentGameState.gameState = GameState.INGAME;
+		}
+		super.draw();
+	}
 	
 }

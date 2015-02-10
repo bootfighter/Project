@@ -8,11 +8,15 @@ public abstract class UIElement {
 	protected int height;
 	protected int width;
 	protected Vector2 position;
+	protected boolean isPressed;
+	protected boolean isHover;
 	
 	public UIElement() {
 		height = 0;
 		width = 0;
 		position = new Vector2(0,0);
+		isPressed = false;
+		isHover = false;
 	}
 	
 	public void setCenter(Vector2 a_center){
@@ -24,6 +28,21 @@ public abstract class UIElement {
 		position = new Vector2(a_position);
 	}
 
+	public boolean isPressed() {
+		return isPressed;
+	}
+	
+	public boolean isHover() {
+		return isHover;
+	}
+	
+	public int getHeight(){
+		return height;
+	}
+
+	public int getWidth(){
+		return width;
+	}
 	
 	public abstract void touchDown(int a_screenX, int a_screenY, int a_button);
 	
