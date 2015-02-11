@@ -21,9 +21,9 @@ public class MapHandler {
 	
 	private void testFill(){
 		
-		currentMap.fillWithTile(new Tile(new Texture("grass.png"), false));
+		currentMap.fillWithTile(new Tile(new Texture("Tiles/grass.png"), false));
 
-		Tile dirt = new Tile(new Texture("dirt.png"), true);
+		Tile dirt = new Tile(new Texture("Tiles/dirt.png"), true);
 
 
 		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(1, currentMap.getDimensionY() - 1, 0));

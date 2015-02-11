@@ -26,7 +26,7 @@ public class Player extends Entity{
 	
 	
 	public Player() {
-		super(new Vector3(0,0,0), new Texture("player.png"), new CollisionRect(new Vector2(0, 0), new Vector2(16, 16)));
+		super(new Vector3(0,0,0), new Texture("missingtxt.png"), new CollisionRect(new Vector2(0, 0), new Vector2(16, 16)));
 		facingDirection = new Vector2(0, 0);
 		moveVector = new Vector3(0,0,0);
 		currentDir = Direction.NORTH;

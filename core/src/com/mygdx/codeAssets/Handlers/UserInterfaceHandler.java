@@ -19,6 +19,7 @@ public abstract class UserInterfaceHandler {
 		userInterfaceBatch = new SpriteBatch();
 		elements = new UIElement[0];
 		currentGameState = a_currentGameState;
+		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
 		isDebug = false;
 	}
 	
@@ -45,6 +46,10 @@ public abstract class UserInterfaceHandler {
 			uiElement.draw(userInterfaceBatch);
 		}
 	}
+	
+	public abstract void keyDown(int keycode);
+	
+	public abstract void keyUp(int keycode);
 	
 	protected abstract void setElementPositions(int a_width, int a_height);
 	

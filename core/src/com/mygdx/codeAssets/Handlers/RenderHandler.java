@@ -19,8 +19,11 @@ public class RenderHandler {
 		isDebug = false;
 		
 		orthoCamera = new OrthographicCamera(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+		orthoCamera.viewportHeight =  Gdx.graphics.getHeight();
+		orthoCamera.viewportWidth = Gdx.graphics.getWidth();
 		orthoCamera.position.set(new Vector3(0,0,0));
 		orthoCamera.update();
+		batch.setProjectionMatrix(orthoCamera.combined);
 	}
 
 	

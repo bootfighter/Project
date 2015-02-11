@@ -1,12 +1,10 @@
 package com.mygdx.codeAssets.Objects.UIElements;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.codeAssets.Objects.UIElement;
 
-public class UIButton extends UIElement{
+public class UIButton extends UIElementClickable{
 
 	private Texture texture;
 	private Texture texturePressed;
@@ -52,38 +50,23 @@ public class UIButton extends UIElement{
 
 	@Override
 	public void touchDown(int a_screenX, int a_screenY, int a_button) {
-		
-		
-		if (!isHover) //mouse is not over element
-			return;
-		isPressed = true;
-
+		super.touchDown(a_screenX, a_screenY, a_button);
 	}
 
 
 	@Override
 	public void touchUp(int a_screenX, int a_screenY, int a_button) {
-		if (!isHover) //mouse is not over element
-			return;
-		isPressed = false;
+		super.touchUp(a_screenX, a_screenY, a_button);
 	}
 
 
 	@Override
 	public void mouseMoved(int a_screenX, int a_screenY) {
-		a_screenY = Gdx.graphics.getHeight() - a_screenY;
-		if (a_screenX < position.x || a_screenX > position.x + width ||
-				a_screenY < position.y || a_screenY > position.y + height){
-			isHover = false;
-			return;
-		}
-		isHover = true;
+		super.mouseMoved(a_screenX, a_screenY);
 	}
 	
 	@Override
 	public void resize(int a_width, int a_height) {
-		
-		
 		
 	}
 }

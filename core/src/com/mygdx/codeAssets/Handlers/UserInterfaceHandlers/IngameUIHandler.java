@@ -1,6 +1,7 @@
 package com.mygdx.codeAssets.Handlers.UserInterfaceHandlers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -30,11 +31,18 @@ public class IngameUIHandler extends UserInterfaceHandler{
 	}
 	
 	private void initElements(){
-		elements = new UIElement[1];
+		elements = new UIElement[2];
 		
 		elements[0] = new UITexture(new Texture("missingtxt.png"));
+		elements[1] = new UITexture(new Texture("UIElements/IngameHUDTest.png"));
 		
 		setElementPositions(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	}
+	
+	@Override
+	protected void setElementPositions(int a_width, int a_height) {
+		elements[0].setCenter(new Vector2(a_width / 2, elements[0].getHeight()));
+		elements[1].setPosition(new Vector2(0, a_height - elements[1].getHeight()));
 	}
 	
 	
@@ -71,9 +79,22 @@ public class IngameUIHandler extends UserInterfaceHandler{
 		super.draw();
 	}
 	
+	
+
 	@Override
-	protected void setElementPositions(int a_width, int a_height) {
-		elements[0].setCenter(new Vector2(a_width / 2, elements[0].getHeight()));
+	public void keyDown(int keycode) {
+		switch (keycode) {
+		case Keys.F1:
+			isDebug = !isDebug;
+			break;
+		default:
+			break;
+		}
+	}
+	
+	@Override
+	public void keyUp(int keycode) {
+		
 	}
 	
 	private void drawDebugInfo()

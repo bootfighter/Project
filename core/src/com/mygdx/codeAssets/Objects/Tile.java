@@ -17,7 +17,6 @@ public class Tile {
 	public Tile(Texture a_texture, ArrayList<CollisionRect> a_collision_boxes){
 		texture = a_texture;
 		collision_boxes = a_collision_boxes;
-		
 	}
 	
 
@@ -59,14 +58,14 @@ public class Tile {
 		return (new Vector3(a_tileSpaceDimX * tileSize, a_tileSpaceDimY * tileSize, a_tileSpaceDimZ * tileSize));
 	}
 	
-	public static Vector3 convertWorldSpaceToTileSpace (Vector3 a_tileSpace){
-		return new Vector3(	(int)a_tileSpace.x / tileSize, 
-				(int)a_tileSpace.y / tileSize,
-				(int)a_tileSpace.z / tileSize);
+	public static Vector3 convertWorldSpaceToTileSpace (Vector3 a_worldSpace){
+		return new Vector3(	(int)a_worldSpace.x / tileSize, 
+				(int)a_worldSpace.y / tileSize,
+				(int)a_worldSpace.z / tileSize);
 	}
 	
-	public static int convertWorldSpaceToTileSpace (int  a_tileSpace){
-		return (a_tileSpace / tileSize);
+	public static int convertWorldSpaceToTileSpace (int  a_worldSpace){
+		return (a_worldSpace / tileSize);
 	}
 	
 	public static Vector3 convertWorldSpaceToTileSpace(int a_worldSpaceDimX, int a_worldSpaceDimY, int a_worldSpaceDimZ ){
