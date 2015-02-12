@@ -8,7 +8,8 @@ public class GameStateMutable {
 		INGAME, 
 		INVENTORY, 
 		NPCINTERACTION,
-		CUTSCENE		
+		CUTSCENE,
+		CREDITS
 	}
 	
 	public GameState gameState;

@@ -10,11 +10,14 @@ public class UIText extends UIElement {
 	private BitmapFont font;
 	private BitmapFont.TextBounds bounds;
 	
-	public UIText(String a_text, BitmapFont a_font) {
+	public UIText(String a_text, BitmapFont a_font, boolean isMultiLine) {
 		super();
 		text = a_text;
 		font = a_font;
-		bounds = font.getBounds(text);
+		if(isMultiLine)
+			bounds = font.getMultiLineBounds(text);
+		else
+			bounds = font.getBounds(text);
 		width = (int)bounds.width;
 		height = (int)bounds.height;
 	}
@@ -24,24 +27,24 @@ public class UIText extends UIElement {
 	public void draw(SpriteBatch a_batch) {
 		a_batch.begin();
 		
-		font.draw(a_batch, text, position.x, position.y);
+		font.drawMultiLine(a_batch, text, position.x, position.y);
 		
 		a_batch.end();
 	}
 	
 	@Override
-	public void mouseMoved(int a_screenX, int a_screenY) {
-		
+	public boolean mouseMoved(int a_screenX, int a_screenY) {
+		return false;
 	}
 	
 	@Override
-	public void touchDown(int a_screenX, int a_screenY, int a_button) {
-		
+	public boolean touchDown(int a_screenX, int a_screenY, int a_button) {
+		return false;
 	}
 	
 	@Override
-	public void touchUp(int a_screenX, int a_screenY, int a_button) {
-		
+	public boolean touchUp(int a_screenX, int a_screenY, int a_button) {
+		return false;
 	}
 	
 	@Override

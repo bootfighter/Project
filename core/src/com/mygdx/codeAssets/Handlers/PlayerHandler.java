@@ -30,7 +30,7 @@ public class PlayerHandler {
 	}
 	
 	
-	public void keyDown(int keycode){
+	public boolean keyDown(int keycode){
 		switch (keycode) {
 
 		case Keys.W:
@@ -63,13 +63,14 @@ public class PlayerHandler {
 
 
 		default:
-			break;
+			return false;
 		}
 		playerDirection.nor();
-		player.setDirection(playerDirection);		
+		player.setDirection(playerDirection);
+		return true;
 	}
 	
-	public void keyUp(int keycode){
+	public boolean keyUp(int keycode){
 		switch (keycode) {
 		case Keys.W:
 			if (Gdx.input.isKeyPressed(Keys.S)){
@@ -103,15 +104,16 @@ public class PlayerHandler {
 			player.sprinting = false;			
 			break;
 		default:
-			break;
+			return false;
 		}
 
 		playerDirection.nor();
 		player.setDirection(playerDirection);
 		
+		return true;
 	}
 	
-	public void mouseMoved(int screenX, int screenY){
+	public boolean mouseMoved(int screenX, int screenY){
 		
 		facingDirection.x = (Gdx.graphics.getWidth() / 2) - screenX;
 		facingDirection.y = (Gdx.graphics.getHeight() / 2) - screenY;
@@ -135,6 +137,8 @@ public class PlayerHandler {
 			facingDirection.y = 0f;
 		
 		player.setFacingDirection(facingDirection);
+		
+		return true;
 	}
 	
 	public void update()

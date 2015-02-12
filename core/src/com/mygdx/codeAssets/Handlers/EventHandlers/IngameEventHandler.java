@@ -21,27 +21,26 @@ public class IngameEventHandler extends EventHandler {
 	
 	@Override
 	public boolean keyDown(int keycode) {
-
-		playerHandler.keyDown(keycode);
-		userInterfaceHandler.keyDown(keycode);
+		if (!userInterfaceHandler.keyDown(keycode))
+			if(!playerHandler.keyDown(keycode))
+				return false; //input not handled
 		return true;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		
-		playerHandler.keyUp(keycode);
-		userInterfaceHandler.keyUp(keycode);
-
+		if(!userInterfaceHandler.keyUp(keycode))
+			if(!playerHandler.keyUp(keycode))
+				return false; //input not handled
 		return true;
 	}
 	
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		
-		playerHandler.mouseMoved(screenX, screenY);
-		userInterfaceHandler.mouseMoved(screenX, screenY);
-		
+		if(!userInterfaceHandler.mouseMoved(screenX, screenY))
+			if(!playerHandler.mouseMoved(screenX, screenY))
+				return false; //input not handled
 		return true;
 	}
 

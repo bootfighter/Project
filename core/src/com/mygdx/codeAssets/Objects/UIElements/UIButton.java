@@ -49,20 +49,20 @@ public class UIButton extends UIElementClickable{
 	
 
 	@Override
-	public void touchDown(int a_screenX, int a_screenY, int a_button) {
-		super.touchDown(a_screenX, a_screenY, a_button);
+	public boolean touchDown(int a_screenX, int a_screenY, int a_button) {
+		return super.touchDown(a_screenX, a_screenY, a_button);
 	}
 
 
 	@Override
-	public void touchUp(int a_screenX, int a_screenY, int a_button) {
-		super.touchUp(a_screenX, a_screenY, a_button);
+	public boolean touchUp(int a_screenX, int a_screenY, int a_button) {
+		return super.touchUp(a_screenX, a_screenY, a_button);
 	}
 
 
 	@Override
-	public void mouseMoved(int a_screenX, int a_screenY) {
-		super.mouseMoved(a_screenX, a_screenY);
+	public boolean mouseMoved(int a_screenX, int a_screenY) {
+		return super.mouseMoved(a_screenX, a_screenY);
 	}
 	
 	@Override

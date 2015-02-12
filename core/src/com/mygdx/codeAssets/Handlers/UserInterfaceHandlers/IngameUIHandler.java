@@ -41,28 +41,28 @@ public class IngameUIHandler extends UserInterfaceHandler{
 	
 	@Override
 	protected void setElementPositions(int a_width, int a_height) {
-		elements[0].setCenter(new Vector2(a_width / 2, elements[0].getHeight()));
-		elements[1].setPosition(new Vector2(0, a_height - elements[1].getHeight()));
+		elements[0].setCenter(a_width / 2, elements[0].getHeight());
+		elements[1].setPosition(0, a_height - elements[1].getHeight());
 	}
 	
 	
 	@Override
-	public void touchDown(int a_screenX, int a_screenY, int a_button) {
+	public boolean touchDown(int a_screenX, int a_screenY, int a_button) {
 		
-		super.touchDown(a_screenX, a_screenY, a_button);
+		return super.touchDown(a_screenX, a_screenY, a_button);
 	}
 	
 	@Override
-	public void touchUp(int a_screenX, int a_screenY, int a_button) {
+	public boolean touchUp(int a_screenX, int a_screenY, int a_button) {
 			
-		super.touchUp(a_screenX, a_screenY, a_button);
+		return super.touchUp(a_screenX, a_screenY, a_button);
 	}
 	
 	
 	@Override
-	public void mouseMoved(int a_screenX, int a_screenY) {
+	public boolean mouseMoved(int a_screenX, int a_screenY) {
 		
-		super.mouseMoved(a_screenX, a_screenY);
+		return super.mouseMoved(a_screenX, a_screenY);
 	}
 	
 	
@@ -79,22 +79,31 @@ public class IngameUIHandler extends UserInterfaceHandler{
 		super.draw();
 	}
 	
-	
+	@Override
+	public void update() {
+		
+	}
 
 	@Override
-	public void keyDown(int keycode) {
+	public boolean keyDown(int keycode) {
 		switch (keycode) {
 		case Keys.F1:
 			isDebug = !isDebug;
 			break;
 		default:
-			break;
+			return false;
 		}
+		return true;
 	}
 	
 	@Override
-	public void keyUp(int keycode) {
-		
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+	
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
 	}
 	
 	private void drawDebugInfo()

@@ -7,10 +7,12 @@ import com.mygdx.codeAssets.Handlers.MapHandler;
 import com.mygdx.codeAssets.Handlers.PlayerHandler;
 import com.mygdx.codeAssets.Handlers.RenderHandler;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandler;
+import com.mygdx.codeAssets.Handlers.EventHandlers.CreditsEventHandler;
 import com.mygdx.codeAssets.Handlers.EventHandlers.IngameEventHandler;
 import com.mygdx.codeAssets.Handlers.EventHandlers.MainMenuEventHandler;
 import com.mygdx.codeAssets.Handlers.RenderHandlers.IngameRenderHandler;
 import com.mygdx.codeAssets.Handlers.RenderHandlers.MainMenuRenderHandler;
+import com.mygdx.codeAssets.Handlers.UserInterfaceHandlers.CreditsUIHandler;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandlers.IngameUIHandler;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandlers.MainMenuUIHandler;
 import com.mygdx.codeAssets.Objects.GameStateMutable;
@@ -40,9 +42,7 @@ public class GameStateMachine {
 		if (prevGameState == currentGameState.gameState)
 			return;
 		updateHandlers();
-		
-		Gdx.input.setInputProcessor(currentEventHandler);
-		
+				
 		prevGameState = currentGameState.gameState;
 	}
 	
@@ -52,20 +52,21 @@ public class GameStateMachine {
 		
 		switch (currentGameState.gameState) {
 		case MAINMENU:
-		
 			break;
 		case INGAME:
 			currentPlayerHandler.update();
 			currentMapHandler.update();
 			break;
+		case CREDITS:
+			break;
 		default:
 			break;
 		}
 		
+		//always happens:
+		currentUserInterfaceHandler.update(); 
 		currentRenderHandler.draw();
 		
-		Gdx.input.setInputProcessor(currentEventHandler);
-
 	}	
 	
 	private void updateHandlers(){
@@ -78,20 +79,23 @@ public class GameStateMachine {
 			break;
 
 		case INGAME:
-			
 			currentMapHandler = new MapHandler();
 			currentPlayerHandler = new PlayerHandler(currentMapHandler);
 			currentUserInterfaceHandler = new IngameUIHandler(currentPlayerHandler, currentGameState);
 			currentRenderHandler = new IngameRenderHandler(currentMapHandler, currentPlayerHandler, currentUserInterfaceHandler, batch);
-			currentEventHandler = new IngameEventHandler(currentMapHandler, currentPlayerHandler, currentRenderHandler, currentUserInterfaceHandler);
-			
-			
+			currentEventHandler = new IngameEventHandler(currentMapHandler, currentPlayerHandler, currentRenderHandler, currentUserInterfaceHandler);			
 			break;
 
+		case CREDITS:
+			currentUserInterfaceHandler = new CreditsUIHandler(currentGameState);
+			currentRenderHandler = new MainMenuRenderHandler(currentUserInterfaceHandler, batch);
+			currentEventHandler = new CreditsEventHandler(currentRenderHandler, currentUserInterfaceHandler);
+			break;
+			
 		default:
-			break;
+			return;
 		}
-
+		Gdx.input.setInputProcessor(currentEventHandler);
 	}
 	
 	public void resize(int width, int height) {

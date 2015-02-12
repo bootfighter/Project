@@ -20,27 +20,30 @@ public abstract class UIElementClickable extends UIElement{
 	}
 	
 	@Override
-	public void touchDown(int a_screenX, int a_screenY, int a_button) {
+	public boolean touchDown(int a_screenX, int a_screenY, int a_button) {
 		if (!isHover) //mouse is not over element
-			return;
+			return false;
 		isPressed = true;
+		return true;
 	}
 	
 	@Override
-	public void touchUp(int a_screenX, int a_screenY, int a_button) {
+	public boolean touchUp(int a_screenX, int a_screenY, int a_button) {
 		if (!isHover) //mouse is not over element
-			return;
+			return false;
 		isPressed = false;
+		return true;
 	}
 	
 	@Override
-	public void mouseMoved(int a_screenX, int a_screenY) {
+	public boolean mouseMoved(int a_screenX, int a_screenY) {
 		a_screenY = Gdx.graphics.getHeight() - a_screenY;
 		if (a_screenX < position.x || a_screenX > position.x + width ||
 				a_screenY < position.y || a_screenY > position.y + height){
 			isHover = false;
-			return;
+			return false;
 		}
 		isHover = true;		
+		return true;
 	}
 }

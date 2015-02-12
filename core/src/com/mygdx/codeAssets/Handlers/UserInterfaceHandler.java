@@ -23,22 +23,28 @@ public abstract class UserInterfaceHandler {
 		isDebug = false;
 	}
 	
-	public void touchDown(int a_screenX, int a_screenY, int a_button){
+	public boolean touchDown(int a_screenX, int a_screenY, int a_button){
 		for (UIElement uiElement : elements) {
-			uiElement.touchDown(a_screenX, a_screenY, a_button);
-		}		
+			if(uiElement.touchDown(a_screenX, a_screenY, a_button))
+				return true;
+		}
+		return false;
 	}
 	
-	public void touchUp(int a_screenX, int a_screenY, int a_button){
+	public boolean touchUp(int a_screenX, int a_screenY, int a_button){
 		for (UIElement uiElement : elements) {
-			uiElement.touchUp(a_screenX, a_screenY, a_button);
+			if(uiElement.touchUp(a_screenX, a_screenY, a_button))
+				return true;
 		}
+		return false;
 	}
 
-	public void mouseMoved(int a_screenX, int a_screenY){
+	public boolean mouseMoved(int a_screenX, int a_screenY){
 		for (UIElement uiElement : elements) {
-			uiElement.mouseMoved(a_screenX, a_screenY);
+			if(uiElement.mouseMoved(a_screenX, a_screenY))
+				return true;
 		}		
+		return false;
 	}
 	
 	public void draw(){
@@ -47,9 +53,13 @@ public abstract class UserInterfaceHandler {
 		}
 	}
 	
-	public abstract void keyDown(int keycode);
+	public abstract void update();
 	
-	public abstract void keyUp(int keycode);
+	public abstract boolean keyDown(int keycode);
+	
+	public abstract boolean keyUp(int keycode);
+	
+	public abstract boolean scrolled(int amount);
 	
 	protected abstract void setElementPositions(int a_width, int a_height);
 	

@@ -41,6 +41,7 @@ public class MainMenuEventHandler extends EventHandler {
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		userInterfaceHandler.mouseMoved(screenX, screenY);
+		
 		return super.mouseMoved(screenX, screenY);
 	}
 	
