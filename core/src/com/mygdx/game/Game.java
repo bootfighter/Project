@@ -31,7 +31,7 @@ public class Game extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(0.6f, 0.7f, 1.f, 1.f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+				
 		gameStateMachine.update();
 	}
 	

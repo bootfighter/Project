@@ -140,8 +140,6 @@ public class AnimationBone {
 	public void reset(){
 		rotate(0);
 		scale(1, 1);
-//		offsetVector.setRotationOfBase(0);
-//		offsetVector.setScaleFromBase(1, 1);
 		for (AnimationBone animationBone : animationBoneChilds) {
 			animationBone.reset();
 		}

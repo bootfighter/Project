@@ -3,6 +3,8 @@ package com.mygdx.codeAssets.Handlers.UserInterfaceHandlers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
@@ -19,6 +21,9 @@ public class IngameUIHandler extends UserInterfaceHandler{
 	Vector2 debugPosition;
 	BitmapFont debugFont;
 	
+	Pixmap debugPixmap;
+	Texture debugTexture;
+	
 	public IngameUIHandler(PlayerHandler a_playerHandler, GameStateMutable a_currentGameState) {
 		super(a_currentGameState);
 		playerHandler = a_playerHandler;
@@ -26,8 +31,13 @@ public class IngameUIHandler extends UserInterfaceHandler{
 		debugFont = new BitmapFont();
 		debugFont.setColor(Color.WHITE);
 		
-		initElements();
 		
+		debugPixmap = new Pixmap(250, 100, Format.RGBA8888);
+		debugPixmap.setColor(.3f, .3f, .3f, .7f);
+		debugPixmap.fill();
+		debugTexture = new Texture(debugPixmap);
+		
+		initElements();
 	}
 	
 	private void initElements(){
@@ -73,10 +83,10 @@ public class IngameUIHandler extends UserInterfaceHandler{
 			currentGameState.gameState = GameState.MAINMENU;
 		}
 		
+		super.draw();
 		
 		if (isDebug)
 			drawDebugInfo();
-		super.draw();
 	}
 	
 	@Override
@@ -112,8 +122,11 @@ public class IngameUIHandler extends UserInterfaceHandler{
 		
 				
 		userInterfaceBatch.setProjectionMatrix(normalProjection);
+		
+		
 		userInterfaceBatch.begin();
 		
+		userInterfaceBatch.draw(debugTexture, debugPosition.x - 10, debugPosition.y - 90);
 				
 		debugFont.draw(userInterfaceBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), debugPosition.x , debugPosition.y);
 		debugFont.draw(userInterfaceBatch, "XYZ: " 
@@ -127,6 +140,7 @@ public class IngameUIHandler extends UserInterfaceHandler{
 		debugFont.draw(userInterfaceBatch, "Facing: "  + String.format("%2.0f", playerHandler.player.getFacingDirection().x)
 				+ String.format("%2.0f", playerHandler.player.getFacingDirection().y), debugPosition.x, debugPosition.y - (3 * debugFont.getLineHeight())- 2);
 		
+
 		userInterfaceBatch.end();
 	}
 	

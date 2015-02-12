@@ -17,6 +17,7 @@ public class UITexture extends UIElementClickable{
 	
 	@Override
 	public boolean touchDown(int a_screenX, int a_screenY, int a_button) {
+		mouseMoved(a_screenX, a_screenY);
 		return super.touchDown(a_screenX, a_screenY, a_button);
 	}
 

@@ -119,8 +119,11 @@ public abstract class Entity {
 						currentRect = CollisionRect.isCollidingWithTile(collisionRect,
 								new Vector2(newPosition.x + (moveVectorNormal.x * currVectorLen), newPosition.y + (moveVectorNormal.y * currVectorLen)), 
 								currentTileList[posX][posY][posZ], new Vector3(subsectionPoint1.x + posX, subsectionPoint1.y + posY, subsectionPoint1.z + posZ));
-
+						
+						
+						
 						//if a colliding Rect has been found
+						
 						if (currentRect != null) {
 
 							changedPos = calculateCollidedPos(currentRect, Tile.convertTileSpaceToWorldSpace((int)subsectionPoint1.x + posX,
@@ -130,11 +133,13 @@ public abstract class Entity {
 								newPosition.x = changedPos.x;
 								moveVector.x = 0;
 								moveVectorNormal.x = 0;
+								moveVectorNormal.nor();
 							}
 							if (changedPos.y != 0){
 								newPosition.y = changedPos.y;
 								moveVector.y = 0;
 								moveVectorNormal.y = 0;
+								moveVectorNormal.nor();
 							}
 
 						}

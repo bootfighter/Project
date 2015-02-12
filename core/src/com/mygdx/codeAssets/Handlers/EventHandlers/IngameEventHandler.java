@@ -14,9 +14,10 @@ public class IngameEventHandler extends EventHandler {
 	
 	public IngameEventHandler(MapHandler a_mapHandler, PlayerHandler a_playerHandler,RenderHandler a_renderHandler, UserInterfaceHandler a_userInterfaceHandler) {
 		super(a_renderHandler, a_userInterfaceHandler);
-		
+
 		mapHandler = a_mapHandler;
 		playerHandler = a_playerHandler;
+		
 	}
 	
 	@Override

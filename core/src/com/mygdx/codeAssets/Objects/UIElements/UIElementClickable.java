@@ -43,6 +43,7 @@ public abstract class UIElementClickable extends UIElement{
 			isHover = false;
 			return false;
 		}
+		
 		isHover = true;		
 		return true;
 	}

@@ -29,6 +29,7 @@ public class UIButton extends UIElementClickable{
 		text = a_buttonText;
 		font = a_font;
 		bounds = new BitmapFont.TextBounds(font.getBounds(text));
+
 	}
 	
 	
@@ -50,6 +51,7 @@ public class UIButton extends UIElementClickable{
 
 	@Override
 	public boolean touchDown(int a_screenX, int a_screenY, int a_button) {
+		mouseMoved(a_screenX, a_screenY);
 		return super.touchDown(a_screenX, a_screenY, a_button);
 	}
 

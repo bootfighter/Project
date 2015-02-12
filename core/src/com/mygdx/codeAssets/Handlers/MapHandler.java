@@ -25,13 +25,15 @@ public class MapHandler {
 
 		Tile dirt = new Tile(new Texture("Tiles/dirt.png"), true);
 
-
+		//Walls preventing ppl from running out
 		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(1, currentMap.getDimensionY() - 1, 0));
 		currentMap.fillWithTile(dirt, new Vector3(0, currentMap.getDimensionY() - 1, 0), new Vector3(currentMap.getDimensionX(), currentMap.getDimensionY() , 0));
 		currentMap.fillWithTile(dirt, new Vector3(currentMap.getDimensionX() - 1, 0, 0), new Vector3(currentMap.getDimensionX(), currentMap.getDimensionY() , 0));
 		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(currentMap.getDimensionX() - 1, 1, 0));
 
 		currentMap.fillWithTile(dirt, new Vector3(8, 8, 0), new Vector3(24, 24, 0));
+		currentMap.fillWithTile(dirt, new Vector3(8, 24, 0), new Vector3(10, 34, 0));
+
 		
 	}
 	

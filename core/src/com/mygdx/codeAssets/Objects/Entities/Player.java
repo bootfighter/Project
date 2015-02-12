@@ -15,7 +15,7 @@ import com.mygdx.game.GameParameters.Direction;
 
 public class Player extends Entity{
 	
-	Vector2 facingDirection;
+	private Vector2 facingDirection;
 	private Vector3 moveVector;
 	private Direction currentDir;
 	private int walkSpeed;
@@ -31,7 +31,7 @@ public class Player extends Entity{
 		moveVector = new Vector3(0,0,0);
 		currentDir = Direction.NORTH;
 		walkSpeed = 100;
-		sprintSpeed = 500;
+		sprintSpeed = 1000;
 		sprinting = false;
 		
 		animBoneHandler = new AnimationBoneHandler(PlayerAnimationData.getAnimationStructureNorth(),
@@ -52,8 +52,8 @@ public class Player extends Entity{
 	public Vector2 getFacingDirection() {
 		return facingDirection;
 	}
-	public void setFacingDirection(Vector2 facingDirection) {
-		this.facingDirection = facingDirection;
+	public void setFacingDirection(Vector2 a_facingDirection) {
+		facingDirection = a_facingDirection;
 	}
 	
 	@Override
@@ -90,6 +90,9 @@ public class Player extends Entity{
 			
 			moveVector.x += direction.x * sprintSpeed * Gdx.graphics.getDeltaTime();
 			moveVector.y += direction.y * sprintSpeed * Gdx.graphics.getDeltaTime();
+			
+//			System.out.println(moveVector + " :: " + Gdx.graphics.getDeltaTime());
+			
 			animBoneHandler.changeAnimation(0); //Walking
 			this.collisionDetection(moveVector, a_map);
 		}

@@ -24,7 +24,7 @@ public class DesktopLauncher {
 		//framelimiter
 		config.vSyncEnabled = false;
 		config.foregroundFPS = 100;
-		config.backgroundFPS = 300;
+		config.backgroundFPS = 50;
 
 		// ------------------ //
 				

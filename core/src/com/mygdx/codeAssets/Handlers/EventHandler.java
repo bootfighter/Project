@@ -1,6 +1,5 @@
 package com.mygdx.codeAssets.Handlers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
 
@@ -15,7 +14,6 @@ public class EventHandler implements InputProcessor {
 		
 		renderHandler = a_renderHandler;
 		userInterfaceHandler = a_userInterfaceHandler;
-		mouseMoved(Gdx.input.getX(), Gdx.input.getY());
 	}
 	
 	@Override
