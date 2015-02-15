@@ -30,8 +30,8 @@ public class Player extends Entity{
 		facingDirection = new Vector2(0, 0);
 		moveVector = new Vector3(0,0,0);
 		currentDir = Direction.NORTH;
-		walkSpeed = 100;
-		sprintSpeed = 1000;
+		walkSpeed = 250;
+		sprintSpeed = 2500;
 		sprinting = false;
 		
 		animBoneHandler = new AnimationBoneHandler(PlayerAnimationData.getAnimationStructureNorth(),
@@ -84,6 +84,8 @@ public class Player extends Entity{
 			moveVector.x += direction.x * walkSpeed * Gdx.graphics.getDeltaTime();
 			moveVector.y += direction.y * walkSpeed * Gdx.graphics.getDeltaTime();
 			animBoneHandler.changeAnimation(0); //Walking
+
+			
 			this.collisionDetection(moveVector, a_map);
 			
 		} else {

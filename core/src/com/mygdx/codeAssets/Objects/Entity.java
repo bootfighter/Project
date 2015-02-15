@@ -81,7 +81,10 @@ public abstract class Entity {
 		CollisionRect currentRect = new CollisionRect();
 		Vector3 changedPos = new Vector3(0, 0, 0);
 		
-		newPosition.add(a_moveVector);
+		boolean xPosChanged = (moveVector.x == 0) ? true : false;
+		boolean yPosChanged = (moveVector.y == 0) ? true : false;
+		
+		newPosition.add(moveVector);
 		moveVectorNormal.nor();
 		
 		subsectionPoint1.x = Math.min(newPosition.x, Math.min(newPosition.x + collisionRect.point2.x, Math.min(position.x, position.x + collisionRect.point2.x)));
@@ -95,61 +98,74 @@ public abstract class Entity {
 		subsectionPoint1 = Tile.convertWorldSpaceToTileSpace(subsectionPoint1);
 		subsectionPoint2 = Tile.convertWorldSpaceToTileSpace(subsectionPoint2);
 		
+		subsectionPoint1 = a_map.convertToInbounds(subsectionPoint1);
+		subsectionPoint2 = a_map.convertToInbounds(subsectionPoint2);
 		
 		Tile[][][] currentTileList = a_map.getTileSubsection(subsectionPoint1, subsectionPoint2);
 		
-		
+
 		int posX = 0;
 		int posY = 0;
 		int posZ = 0;
-			
-		for(int dimX = 0 ; dimX <= (subsectionPoint2.x - subsectionPoint1.x) ; dimX++){ 
-			posX = (int) (moveVector.x < 0 ? (subsectionPoint2.x - subsectionPoint1.x) - dimX : dimX);
-			
-			for(int dimY = 0 ; dimY <= (subsectionPoint2.y - subsectionPoint1.y) ; dimY++){
-				posY = (int) (moveVector.y < 0 ? (subsectionPoint2.y - subsectionPoint1.y) - dimY : dimY);
-				
-				for(int dimZ = 0 ; dimZ <= (subsectionPoint2.z - subsectionPoint1.z) ; dimZ++){
-					posZ = (int) (moveVector.z < 0 ? (subsectionPoint2.z - subsectionPoint1.z) - dimZ : dimZ);
+		
+		Vector3 subsectionDimensions = new Vector3(subsectionPoint2.x - subsectionPoint1.x, 
+													subsectionPoint2.y - subsectionPoint1.y, 
+													subsectionPoint2.z - subsectionPoint1.z);
+	
 
-					currVectorLen = 0;
+		while(currVectorLen <= moveVectorLen){
 
-					while(currVectorLen < moveVectorLen){
-						
+			for(int dimX = 0 ; dimX <= subsectionDimensions.x; dimX++){ 
+
+				posX = (int) (moveVector.x < 0 ? subsectionDimensions.x - dimX : dimX);
+
+				for(int dimY = 0 ; dimY <= subsectionDimensions.y ; dimY++){
+
+					posY = (int) (moveVector.y < 0 ? subsectionDimensions.y - dimY : dimY);
+
+					for(int dimZ = 0 ; dimZ <= subsectionDimensions.z ; dimZ++){
+
+						posZ = (int) (moveVector.z < 0 ? subsectionDimensions.z - dimZ : dimZ);
+
 						currentRect = CollisionRect.isCollidingWithTile(collisionRect,
-								new Vector2(newPosition.x + (moveVectorNormal.x * currVectorLen), newPosition.y + (moveVectorNormal.y * currVectorLen)), 
-								currentTileList[posX][posY][posZ], new Vector3(subsectionPoint1.x + posX, subsectionPoint1.y + posY, subsectionPoint1.z + posZ));
-						
-						
-						
-						//if a colliding Rect has been found
-						
-						if (currentRect != null) {
+								new Vector2(position.x + (moveVectorNormal.x * currVectorLen), position.y + (moveVectorNormal.y * currVectorLen)), 
+								currentTileList[posX][posY][posZ], 
+								new Vector3(subsectionPoint1.x + posX, subsectionPoint1.y + posY, subsectionPoint1.z + posZ));
 
+						//if a colliding Rect has been found
+
+						if (currentRect != null) {
 							changedPos = calculateCollidedPos(currentRect, Tile.convertTileSpaceToWorldSpace((int)subsectionPoint1.x + posX,
 									(int)subsectionPoint1.y + posY, (int)subsectionPoint1.z + posZ), moveVector);
 							
-							if (changedPos.x != 0){
+							//changed position is not 0 if the value has changed - therefore the new position is the changed position 
+							if (changedPos.x != 0f && !xPosChanged){
 								newPosition.x = changedPos.x;
-								moveVector.x = 0;
+								moveVector.x = 0; 
 								moveVectorNormal.x = 0;
-								moveVectorNormal.nor();
+								xPosChanged = true;
 							}
-							if (changedPos.y != 0){
-								newPosition.y = changedPos.y;
-								moveVector.y = 0;
+
+							if (changedPos.y != 0f && !yPosChanged){
+								newPosition.y = changedPos.y; 
+								moveVector.y = 0; 
 								moveVectorNormal.y = 0;
-								moveVectorNormal.nor();
+								yPosChanged = true;
 							}
-
+							//both positions have been changed -- saves calculation power at high speeds
+							if (xPosChanged && yPosChanged){
+								position.set(newPosition);
+								return;
+							}
 						}
-
-						currVectorLen += collisionIteration;
 					}
 				}
 			}
+			if (moveVectorLen - currVectorLen < collisionIteration && moveVectorLen != currVectorLen)
+				currVectorLen = moveVectorLen; //for a last calculation in the while loop for the final position
+			else
+				currVectorLen += collisionIteration;
 		}
-		
 		
 		//if nothing has been found
 		position.set(newPosition);
@@ -157,41 +173,82 @@ public abstract class Entity {
 	}
 	
 	private Vector3 calculateCollidedPos(CollisionRect a_rect, Vector3 a_rectPos, Vector3 a_moveVector) {
-		//this collides with a_rect1 with a_rectPos1 with Vel of movevector
+		
+		//this collides with a_rect1 with a_rectPos1 with Vel of move vector
 		CollisionRect worldPosRect = new CollisionRect(a_rect);
-		Vector2 newPosition = new Vector2(0, 0);
+		Vector2 entityCollRectCenter = new Vector2(0, 0);
+		float fxone = 0f;
+		float fxtwo = 0f;
+		float fyone = 0f;
+		float fytwo = 0f;
 
-		worldPosRect.point1.add(new Vector2(a_rectPos.x, a_rectPos.y));
-		worldPosRect.point2.add(new Vector2(a_rectPos.x, a_rectPos.y));
+		//inflating world rect up
+		worldPosRect.point1.x = a_rectPos.x + a_rect.point1.x - (collisionRect.point2.x - collisionRect.point1.x) / 2;
+		worldPosRect.point1.y = a_rectPos.y + a_rect.point1.y - (collisionRect.point2.y - collisionRect.point1.y) / 2;
+		worldPosRect.point2.x = a_rectPos.x + a_rect.point2.x + (collisionRect.point2.x - collisionRect.point2.x) * 1.5f;
+		worldPosRect.point2.y = a_rectPos.y + a_rect.point2.y + (collisionRect.point2.y - collisionRect.point2.y) * 1.5f;
 		
-		if (position.x + collisionRect.point2.x <= worldPosRect.point1.x) {
-			//coming from left
+		entityCollRectCenter.x = position.x + collisionRect.point1.x + collisionRect.point2.x / 2;
+		entityCollRectCenter.y = position.y + collisionRect.point1.y + collisionRect.point2.y / 2;
 
-			newPosition.x = worldPosRect.point1.x - collisionRect.point2.x;
-			return new Vector3(newPosition, position.z);
-		}
-
-		if (position.x >= worldPosRect.point2.x) {
-			//coming from right
-
-			newPosition.x = worldPosRect.point2.x;
-			return new Vector3(newPosition, position.z);
-		}
 		
-		if (position.y + collisionRect.point2.y <= worldPosRect.point1.y) {
-			//coming from under
-
-			newPosition.y = worldPosRect.point1.y - collisionRect.point2.y;
-			return new Vector3(newPosition, position.z);
-
+		
+		if(a_moveVector.x != 0){
+			fxone = (worldPosRect.point1.x - entityCollRectCenter.x) / a_moveVector.x;
+			fxtwo = (worldPosRect.point2.x - entityCollRectCenter.x) / a_moveVector.x;
 		}
-		if (position.y >= worldPosRect.point2.y) {
-			//coming from up
-
-			newPosition.y = worldPosRect.point2.y;
-			return new Vector3(newPosition, position.z);
+		if(a_moveVector.y != 0){
+			fyone = (worldPosRect.point1.y - entityCollRectCenter.y) / a_moveVector.y;
+			fytwo = (worldPosRect.point2.y - entityCollRectCenter.y) / a_moveVector.y;
 		}
 		
-		return new Vector3(newPosition, position.z);
+		if (fxone > fxtwo) {
+			float swapVar = fxtwo;
+			fxtwo = fxone;
+			fxone = swapVar;			
+		}
+		if (fyone > fytwo) {
+			float swapVar = fytwo;
+			fytwo = fyone;
+			fyone = swapVar;			
+		}
+		
+		if (a_moveVector.x == 0) {
+			if (a_moveVector.y > 0) {
+				return new Vector3(0, a_rectPos.y - collisionRect.point2.y, position.z);
+			}else {
+				return new Vector3(0, a_rectPos.y + a_rect.point2.y - collisionRect.point1.y, position.z);
+			} 
+		}
+		
+		if (a_moveVector.y == 0) {
+			if (a_moveVector.x > 0) {
+				return new Vector3(a_rectPos.x - collisionRect.point2.x, 0, position.z);
+			}else {
+				return new Vector3(a_rectPos.x + a_rect.point2.x - collisionRect.point1.x, 0, position.z);
+			}
+		}
+		
+		if (fxone <= fyone && fyone <= fxtwo) { //fyone in interval of fxone and fxtwo
+			
+			if (a_moveVector.y > 0) {
+				return new Vector3(0, a_rectPos.y - collisionRect.point2.y, position.z);
+			}else {
+				return new Vector3(0, a_rectPos.y + a_rect.point2.y - collisionRect.point1.y, position.z);
+			} 
+			
+		}
+		
+		if (fxone <= fytwo && fytwo <= fxtwo) { //fytwo in interval of fxone and fxtwo
+			
+			if (a_moveVector.x > 0) {
+				return new Vector3(a_rectPos.x - collisionRect.point2.x, 0, position.z);
+			}else {
+				return new Vector3(a_rectPos.x + a_rect.point2.x - collisionRect.point1.x, 0, position.z);
+			}
+		}
+
+		//should never happen
+		return new Vector3(0,0,0);
 	}
 }

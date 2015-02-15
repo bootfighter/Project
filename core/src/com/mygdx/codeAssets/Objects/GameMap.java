@@ -164,17 +164,17 @@ public class GameMap {
 		return true;
 	}
 	
-//	private boolean isPositiv(Vector3 a_dimensions){
-//		if (a_dimensions.x < 0)
-//			return false;
-//		if (a_dimensions.y < 0)
-//			return false;
-//		if (a_dimensions.z < 0)
-//			return false;
-//		return true;
-//	}
+	public Vector3 convertToInbounds(Vector3 a_point){
+		a_point.x = (a_point.x < 0) ? 0 : a_point.x;
+		a_point.y = (a_point.y < 0) ? 0 : a_point.y;
+		a_point.z = (a_point.z < 0) ? 0 : a_point.z;
+		a_point.x = (a_point.x > dimensionX - 1) ? dimensionX - 1 : a_point.x;
+		a_point.y = (a_point.y > dimensionY - 1) ? dimensionY - 1 : a_point.y;
+		a_point.z = (a_point.z > dimensionZ - 1) ? dimensionZ - 1 : a_point.z;
+		return a_point;
+	}
 	
-	private boolean isPositiv(int a_dimensionX, int a_dimensionY, int a_dimensionZ){
+ 	private boolean isPositiv(int a_dimensionX, int a_dimensionY, int a_dimensionZ){
 		if(a_dimensionX < 0)
 			return false;
 		if(a_dimensionY < 0)
