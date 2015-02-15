@@ -185,8 +185,8 @@ public abstract class Entity {
 		//inflating world rect up
 		worldPosRect.point1.x = a_rectPos.x + a_rect.point1.x - (collisionRect.point2.x - collisionRect.point1.x) / 2;
 		worldPosRect.point1.y = a_rectPos.y + a_rect.point1.y - (collisionRect.point2.y - collisionRect.point1.y) / 2;
-		worldPosRect.point2.x = a_rectPos.x + a_rect.point2.x + (collisionRect.point2.x - collisionRect.point2.x) * 1.5f;
-		worldPosRect.point2.y = a_rectPos.y + a_rect.point2.y + (collisionRect.point2.y - collisionRect.point2.y) * 1.5f;
+		worldPosRect.point2.x = a_rectPos.x + a_rect.point2.x + (collisionRect.point2.x - collisionRect.point1.x) / 2;
+		worldPosRect.point2.y = a_rectPos.y + a_rect.point2.y + (collisionRect.point2.y - collisionRect.point1.y) / 2;
 		
 		entityCollRectCenter.x = position.x + collisionRect.point1.x + collisionRect.point2.x / 2;
 		entityCollRectCenter.y = position.y + collisionRect.point1.y + collisionRect.point2.y / 2;
@@ -202,6 +202,7 @@ public abstract class Entity {
 			fytwo = (worldPosRect.point2.y - entityCollRectCenter.y) / a_moveVector.y;
 		}
 		
+		
 		if (fxone > fxtwo) {
 			float swapVar = fxtwo;
 			fxtwo = fxone;
@@ -212,6 +213,7 @@ public abstract class Entity {
 			fytwo = fyone;
 			fyone = swapVar;			
 		}
+		
 		
 		if (a_moveVector.x == 0) {
 			if (a_moveVector.y > 0) {
@@ -248,7 +250,25 @@ public abstract class Entity {
 			}
 		}
 
+		if (fxone > fyone && fxtwo < fytwo) {
+			if (a_moveVector.x > 0) {
+				return new Vector3(a_rectPos.x - collisionRect.point2.x, 0, position.z);
+			}else {
+				return new Vector3(a_rectPos.x + a_rect.point2.x - collisionRect.point1.x, 0, position.z);
+			}
+		}
+		
+		if (fyone > fxone && fytwo < fxtwo) {
+			
+			if (a_moveVector.y > 0) {
+				return new Vector3(0, a_rectPos.y - collisionRect.point2.y, position.z);
+			}else {
+				return new Vector3(0, a_rectPos.y + a_rect.point2.y - collisionRect.point1.y, position.z);
+			} 
+		}
+		
 		//should never happen
+		System.out.println("should never happen " + worldPosRect.point1.x + " | " + worldPosRect.point1.y + " | " + worldPosRect.point2.x + " | " + worldPosRect.point2.y);
 		return new Vector3(0,0,0);
 	}
 }

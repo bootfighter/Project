@@ -31,7 +31,7 @@ public class Player extends Entity{
 		moveVector = new Vector3(0,0,0);
 		currentDir = Direction.NORTH;
 		walkSpeed = 250;
-		sprintSpeed = 2500;
+		sprintSpeed = 500;
 		sprinting = false;
 		
 		animBoneHandler = new AnimationBoneHandler(PlayerAnimationData.getAnimationStructureNorth(),
