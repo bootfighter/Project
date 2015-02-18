@@ -38,7 +38,7 @@ public class MapHandler {
 
 
 		currentMap.fillWithTile(dirt, new Vector3(8, 40, 0), new Vector3(9, 60, 0));
-		currentMap.fillWithTile(dirt, new Vector3(10, 39, 0), new Vector3(11, 61, 0));
+		currentMap.fillWithTile(dirt, new Vector3(10, 40, 0), new Vector3(11, 60, 0));
 		currentMap.fillWithTile(dirt, new Vector3(12, 40, 0), new Vector3(13, 60, 0));
 
 		

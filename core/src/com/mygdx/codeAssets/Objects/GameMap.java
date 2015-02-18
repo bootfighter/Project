@@ -13,8 +13,8 @@ public class GameMap {
 	private int dimensionX;
 	private int dimensionY;
 	private int dimensionZ;
-	static Vector2 drawPoint1;
-	static Vector2 drawPoint2;
+	private Vector2 drawPoint1;
+	private Vector2 drawPoint2;
 
 	// Constructors
 	public GameMap(int a_dimensionX, int a_dimensionY, int a_dimensionZ) {
