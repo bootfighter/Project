@@ -3,25 +3,26 @@ package com.mygdx.codeAssets.Handlers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
-import com.mygdx.codeAssets.Objects.GameStateMutable;
 import com.mygdx.codeAssets.Objects.UIElement;
+import com.mygdx.codeAssets.Scenes.SceneAbstract;
 
 public abstract class UserInterfaceHandler {
 	
 	
+	protected SceneAbstract scene;	
 	protected UIElement[] elements;
 	protected SpriteBatch userInterfaceBatch;
 	protected Matrix4 normalProjection;
-	protected GameStateMutable currentGameState;
 	public boolean isDebug;
 	
-	public UserInterfaceHandler(GameStateMutable a_currentGameState) {
+	public UserInterfaceHandler(SceneAbstract a_scene) {
 		userInterfaceBatch = new SpriteBatch();
+		scene = a_scene;
 		elements = new UIElement[0];
-		currentGameState = a_currentGameState;
 		normalProjection = new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(),  Gdx.graphics.getHeight());
 		isDebug = false;
 	}
+		
 	
 	public boolean touchDown(int a_screenX, int a_screenY, int a_button){
 		for (UIElement uiElement : elements) {

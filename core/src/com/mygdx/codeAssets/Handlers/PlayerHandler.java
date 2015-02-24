@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.Weapon;
 import com.mygdx.codeAssets.Objects.Entities.Player;
 import com.mygdx.codeAssets.Objects.Weapons.Daggers.SapphireDagger;
+import com.mygdx.codeAssets.Scenes.SceneAbstract;
 
 public class PlayerHandler {
 	
@@ -19,7 +20,7 @@ public class PlayerHandler {
 	Vector2 facingDirection;
 	Vector2 playerDirection;
 	
-	public PlayerHandler(MapHandler a_mapHandler) {
+	public PlayerHandler(MapHandler a_mapHandler, SceneAbstract a_Scene) {
 		mapHandler = a_mapHandler;
 		player = new Player();
 		player.position = new Vector3(30, 30, 0);

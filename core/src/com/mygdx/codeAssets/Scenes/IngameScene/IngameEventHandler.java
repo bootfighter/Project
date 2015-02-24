@@ -1,10 +1,11 @@
-package com.mygdx.codeAssets.Handlers.EventHandlers;
+package com.mygdx.codeAssets.Scenes.IngameScene;
 
 import com.mygdx.codeAssets.Handlers.EventHandler;
 import com.mygdx.codeAssets.Handlers.MapHandler;
 import com.mygdx.codeAssets.Handlers.PlayerHandler;
 import com.mygdx.codeAssets.Handlers.RenderHandler;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandler;
+import com.mygdx.codeAssets.Scenes.SceneAbstract;
 
 public class IngameEventHandler extends EventHandler {
 
@@ -12,8 +13,9 @@ public class IngameEventHandler extends EventHandler {
 	PlayerHandler playerHandler;
 
 	
-	public IngameEventHandler(MapHandler a_mapHandler, PlayerHandler a_playerHandler,RenderHandler a_renderHandler, UserInterfaceHandler a_userInterfaceHandler) {
-		super(a_renderHandler, a_userInterfaceHandler);
+	public IngameEventHandler(MapHandler a_mapHandler, PlayerHandler a_playerHandler,RenderHandler a_renderHandler, UserInterfaceHandler a_userInterfaceHandler,
+									SceneAbstract a_scene) {
+		super(a_renderHandler, a_userInterfaceHandler, a_scene);
 
 		mapHandler = a_mapHandler;
 		playerHandler = a_playerHandler;

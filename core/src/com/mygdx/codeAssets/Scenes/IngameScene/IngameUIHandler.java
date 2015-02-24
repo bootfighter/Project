@@ -1,4 +1,4 @@
-package com.mygdx.codeAssets.Handlers.UserInterfaceHandlers;
+package com.mygdx.codeAssets.Scenes.IngameScene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -10,10 +10,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.codeAssets.Handlers.PlayerHandler;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandler;
-import com.mygdx.codeAssets.Objects.GameStateMutable;
 import com.mygdx.codeAssets.Objects.GameStateMutable.GameState;
 import com.mygdx.codeAssets.Objects.UIElement;
 import com.mygdx.codeAssets.Objects.UIElements.UITexture;
+import com.mygdx.codeAssets.Scenes.SceneAbstract;
 
 public class IngameUIHandler extends UserInterfaceHandler{
 
@@ -24,8 +24,8 @@ public class IngameUIHandler extends UserInterfaceHandler{
 	Pixmap debugPixmap;
 	Texture debugTexture;
 	
-	public IngameUIHandler(PlayerHandler a_playerHandler, GameStateMutable a_currentGameState) {
-		super(a_currentGameState);
+	public IngameUIHandler(PlayerHandler a_playerHandler, SceneAbstract a_scene) {
+		super(a_scene);
 		playerHandler = a_playerHandler;
 		debugPosition = new Vector2(10,0);
 		debugFont = new BitmapFont();
@@ -59,7 +59,13 @@ public class IngameUIHandler extends UserInterfaceHandler{
 	@Override
 	public boolean touchDown(int a_screenX, int a_screenY, int a_button) {
 		
-		return super.touchDown(a_screenX, a_screenY, a_button);
+		if (super.touchDown(a_screenX, a_screenY, a_button)) {
+			if (elements[0].isPressed()) {
+				scene.setNewState(GameState.MAINMENU);
+			}
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
@@ -78,11 +84,6 @@ public class IngameUIHandler extends UserInterfaceHandler{
 	
 	@Override
 	public void draw() {
-		
-		if (elements[0].isPressed()) {
-			currentGameState.gameState = GameState.MAINMENU;
-		}
-		
 		super.draw();
 		
 		if (isDebug)
@@ -99,6 +100,9 @@ public class IngameUIHandler extends UserInterfaceHandler{
 		switch (keycode) {
 		case Keys.F1:
 			isDebug = !isDebug;
+			break;
+		case Keys.ESCAPE:
+			scene.setNewState(GameState.INGAMEMENU);
 			break;
 		default:
 			return false;

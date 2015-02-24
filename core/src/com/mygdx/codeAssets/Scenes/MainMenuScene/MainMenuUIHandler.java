@@ -1,22 +1,21 @@
-package com.mygdx.codeAssets.Handlers.UserInterfaceHandlers;
+package com.mygdx.codeAssets.Scenes.MainMenuScene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandler;
-import com.mygdx.codeAssets.Objects.GameStateMutable;
 import com.mygdx.codeAssets.Objects.GameStateMutable.GameState;
 import com.mygdx.codeAssets.Objects.UIElement;
 import com.mygdx.codeAssets.Objects.UIElements.UIButton;
 import com.mygdx.codeAssets.Objects.UIElements.UIText;
 import com.mygdx.codeAssets.Objects.UIElements.UITexture;
+import com.mygdx.codeAssets.Scenes.SceneAbstract;
 
 public class MainMenuUIHandler extends UserInterfaceHandler{
 
 	
-	public MainMenuUIHandler(GameStateMutable a_currentGameState) {
-		super(a_currentGameState); 
-
+	public MainMenuUIHandler(SceneAbstract a_scene) {
+		super(a_scene);
 		initButtons();
 		
 	}
@@ -33,7 +32,7 @@ public class MainMenuUIHandler extends UserInterfaceHandler{
 		elements[2] = new UIButton("MenuButton", "Credits", font);
 		elements[3] = new UIButton("MenuButton", "Quit Game", font);
 		elements[4] = new UITexture(new Texture("UIElements/Title.png"));
-		elements[5] = new UIText("RPG_FS v0.0.1", font, false);
+		elements[5] = new UIText("RPG_FS v0.0.2", font, false);
 		elements[6] = new UIText("All right reserved by <insert companyname>", font, false);
 				
 		setElementPositions(width, height);		
@@ -69,17 +68,15 @@ public class MainMenuUIHandler extends UserInterfaceHandler{
 	public boolean touchDown(int a_screenX, int a_screenY, int a_button) {
 		if(super.touchDown(a_screenX, a_screenY, a_button)){
 			if (elements[0].isPressed()) {
-				currentGameState.gameState = GameState.INGAME;
-				return true;
+				scene.setNewState(GameState.INGAME);
 			}
 			if (elements[2].isPressed()) {
-				currentGameState.gameState = GameState.CREDITS;
-				return true;
+				scene.setNewState(GameState.CREDITS);
 			}
 			if (elements[3].isPressed()) {
-				Gdx.app.exit();
-				return true;
+				scene.setNewState(GameState.EXIT);
 			}
+			return true;
 		}
 		return false;
 	}

@@ -1,14 +1,14 @@
-package com.mygdx.codeAssets.Handlers.UserInterfaceHandlers;
+package com.mygdx.codeAssets.Scenes.CreditsScene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mygdx.codeAssets.Handlers.UserInterfaceHandler;
-import com.mygdx.codeAssets.Objects.GameStateMutable;
 import com.mygdx.codeAssets.Objects.GameStateMutable.GameState;
 import com.mygdx.codeAssets.Objects.UIElement;
 import com.mygdx.codeAssets.Objects.UIElements.UIText;
+import com.mygdx.codeAssets.Scenes.SceneAbstract;
 
 public class CreditsUIHandler extends UserInterfaceHandler{
 
@@ -18,8 +18,8 @@ public class CreditsUIHandler extends UserInterfaceHandler{
 	private int viewportWidth;
 	private int viewportHeight;
 	
-	public CreditsUIHandler(GameStateMutable a_currentGameState) {
-		super(a_currentGameState);
+	public CreditsUIHandler(SceneAbstract a_scene) {
+		super(a_scene);
 		
 		font = new BitmapFont();
 		font.setColor(Color.BLACK);
@@ -55,7 +55,7 @@ public class CreditsUIHandler extends UserInterfaceHandler{
 		setElementPositions(viewportWidth, viewportHeight);
 		
 		if (currentTime > creditsRollTime) {
-			currentGameState.gameState = GameState.MAINMENU;
+			scene.setNewState(GameState.MAINMENU);
 		}
 		
 	}
@@ -73,7 +73,7 @@ public class CreditsUIHandler extends UserInterfaceHandler{
 	public boolean keyDown(int keycode) {
 		switch (keycode) {
 		case Keys.ESCAPE:
-			currentGameState.gameState = GameState.MAINMENU;
+			scene.setNewState(GameState.MAINMENU);
 			break;
 		default:
 			return false;

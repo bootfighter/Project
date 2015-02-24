@@ -4,17 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.codeAssets.Scenes.SceneAbstract;
 
-public class RenderHandler {
+public abstract class RenderHandler {
 	
 	protected SpriteBatch batch;
 	protected OrthographicCamera orthoCamera;
 	protected UserInterfaceHandler userInterfaceHandler;
+	protected SceneAbstract scene;
 	public boolean isDebug;
 	
-	public RenderHandler(UserInterfaceHandler a_userInterfaceHandler, SpriteBatch a_batch){
+	public RenderHandler(UserInterfaceHandler a_userInterfaceHandler, SpriteBatch a_batch, SceneAbstract a_scene){
 		
 		userInterfaceHandler = a_userInterfaceHandler;
+		scene = a_scene;
 		batch = a_batch;
 		isDebug = false;
 		
@@ -26,6 +29,9 @@ public class RenderHandler {
 		batch.setProjectionMatrix(orthoCamera.combined);
 	}
 
+	public void setUIHandler(UserInterfaceHandler a_uiHandler){
+		userInterfaceHandler = a_uiHandler;
+	}
 	
 	public void resize(int a_XSize, int a_YSize) {
 		userInterfaceHandler.resize(a_XSize, a_YSize);
@@ -41,6 +47,7 @@ public class RenderHandler {
 	}	
 	
 	public void zoom(int a_deltaZoom){
+		
+		
 	}
-	
 }

@@ -1,31 +1,41 @@
 package com.mygdx.codeAssets.Handlers;
 
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.codeAssets.Scenes.SceneAbstract;
 
 
-public class EventHandler implements InputProcessor {
+public abstract class EventHandler implements InputProcessor {
 
 	
 	protected RenderHandler renderHandler;
 	protected UserInterfaceHandler userInterfaceHandler;
+	protected SceneAbstract scene;
 	
 	
-	public EventHandler(RenderHandler a_renderHandler, UserInterfaceHandler a_userInterfaceHandler){
+	public EventHandler(RenderHandler a_renderHandler, UserInterfaceHandler a_userInterfaceHandler, SceneAbstract a_scene){
 		
 		renderHandler = a_renderHandler;
 		userInterfaceHandler = a_userInterfaceHandler;
+		scene = a_scene;
 	}
+	
+	public void setUIHandler(UserInterfaceHandler a_uiHandler){
+		userInterfaceHandler = a_uiHandler;
+	}
+	
+	public void setRenderHandler(RenderHandler a_renderHandler){
+		renderHandler = a_renderHandler;
+	}
+	
 	
 	@Override
 	public boolean keyDown(int keycode) {
-		
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		
-		return true;
+		return false;
 	}
 
 	@Override
