@@ -16,18 +16,7 @@ public abstract class SceneAbstract {
 	public SceneAbstract(GameStateMachine a_gameStateMachine) {
 		gameStateMachine = a_gameStateMachine;
 	}
-	
-	public void setUIHandler(UserInterfaceHandler a_uiHandler){
-		currentUIHandler = a_uiHandler;
-	
-	}
-	public void setEventHandler(EventHandler a_eventHandler){
-		currentEventHandler = a_eventHandler;
-	
-	}
-	public void setRenderHandler(RenderHandler a_renderHandler){
-		currentRenderHandler = a_renderHandler;
-	}
+
 	
 	public abstract void setNewState(GameState a_gameState);
 	

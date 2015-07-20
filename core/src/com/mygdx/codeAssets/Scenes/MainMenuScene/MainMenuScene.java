@@ -10,6 +10,7 @@ import com.mygdx.codeAssets.Scenes.IngameScene.IngameScene;
 public class MainMenuScene extends SceneAbstract{
 
 	public MainMenuScene( GameStateMachine a_gameStateMachine) {
+		
 		super(a_gameStateMachine);
 		currentUIHandler = new MainMenuUIHandler(this);
 		currentRenderHandler = new MainMenuRenderHandler(currentUIHandler, gameStateMachine.getBatch(), this);
@@ -37,11 +38,6 @@ public class MainMenuScene extends SceneAbstract{
 		}
 	}
 	
-	public void setNewState(GameState a_gameState, String a_info){
-		
-		//TODO: load game with the given information
-		
-	}
 	
 	
 	@Override

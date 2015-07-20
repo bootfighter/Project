@@ -21,6 +21,7 @@ public class GameStateMachine {
 		return scene;
 	}
 	public void setScene(SceneAbstract a_scene){
+		if(scene != null) scene.dispose();
 		scene = a_scene;
 	}
 	

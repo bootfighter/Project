@@ -213,6 +213,7 @@ public class GameMap {
 			}
 		}
 		a_batch.end();
+		
 	}
 
 }

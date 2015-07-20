@@ -24,6 +24,8 @@ public class IngameScene extends IngameSceneAbstract{
 		Gdx.input.setInputProcessor(currentEventHandler);
 	}
 	
+	
+	
 	public IngameScene(GameStateMachine a_gameStateMachine, MapHandler a_mapHandler, PlayerHandler a_playerHandler, RenderHandler a_renderHandler) {
 		super(a_gameStateMachine);
 		

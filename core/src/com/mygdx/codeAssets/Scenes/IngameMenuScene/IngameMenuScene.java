@@ -33,6 +33,7 @@ public class IngameMenuScene extends IngameSceneAbstract {
 			gameStateMachine.setScene(new IngameScene(gameStateMachine, currentMapHandler, currentPlayerHandler, currentRenderHandler));
 			break;
 			
+			
 		case MAINMENU:
 			gameStateMachine.setScene(new MainMenuScene(gameStateMachine));
 			break;

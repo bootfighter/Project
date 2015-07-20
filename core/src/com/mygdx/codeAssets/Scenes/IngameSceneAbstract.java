@@ -12,12 +12,4 @@ public abstract class IngameSceneAbstract extends SceneAbstract {
 	public IngameSceneAbstract(GameStateMachine a_gameStateMachine) {
 		super(a_gameStateMachine);
 	}
-	
-	public void setMapHandler(MapHandler a_mapHandler){
-		currentMapHandler = a_mapHandler;
-	}
-	public void setPlayerHandler(PlayerHandler a_playerHandler) {
-		currentPlayerHandler = a_playerHandler;
-	}
-
 }

@@ -30,6 +30,7 @@ public class Game extends ApplicationAdapter {
 				
 		gameStateMachineS.update();
 		gameStateMachineS.render();
+		
 	}
 	
 	@Override

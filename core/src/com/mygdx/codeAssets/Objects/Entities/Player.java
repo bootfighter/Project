@@ -11,6 +11,7 @@ import com.mygdx.codeAssets.Objects.CollisionRect;
 import com.mygdx.codeAssets.Objects.Entity;
 import com.mygdx.codeAssets.Objects.GameMap;
 import com.mygdx.codeAssets.Objects.Tile;
+import com.mygdx.codeAssets.Particles.DustParticleEmitter;
 import com.mygdx.game.GameParameters.Direction;
 
 public class Player extends Entity{
@@ -21,6 +22,9 @@ public class Player extends Entity{
 	private int walkSpeed;
 	private int sprintSpeed;
 	public boolean sprinting;
+	
+	private DustParticleEmitter dustParticleEmitter;
+	
 	
 	AnimationBoneHandler animBoneHandler;
 	
@@ -33,6 +37,8 @@ public class Player extends Entity{
 		walkSpeed = 250;
 		sprintSpeed = 500;
 		sprinting = false;
+		
+		dustParticleEmitter = new DustParticleEmitter();
 		
 		animBoneHandler = new AnimationBoneHandler(PlayerAnimationData.getAnimationStructureNorth(),
 													PlayerAnimationData.getAnimationStructureEast(),
@@ -70,14 +76,20 @@ public class Player extends Entity{
 		moveVector.x = 0;
 		moveVector.y = 0;
 		
+		dustParticleEmitter.update();
 		
 		//no change in position
 		if (direction.x == 0 && direction.y == 0){
 			animBoneHandler.changeAnimation(1); //Idle
 			animBoneHandler.update(new Vector2(position.x, position.y), currentDir);
+			
+			dustParticleEmitter.endEmitting();
+			
 			return;
 		} 
-		
+		dustParticleEmitter.setPosition(new Vector3(position.x + collisionRect.point2.x / 2, 
+										position.y, position.z));
+		dustParticleEmitter.startEmitting();
 		
 		if (!sprinting) {
 			
@@ -122,6 +134,7 @@ public class Player extends Entity{
 	
 	public void draw(SpriteBatch a_batch) {
 	
+		dustParticleEmitter.draw(a_batch);
 		animBoneHandler.draw(a_batch);
 		
 	}
