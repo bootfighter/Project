@@ -1,6 +1,5 @@
 package com.mygdx.codeAssets.Handlers;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.codeAssets.Objects.GameMap;
@@ -21,15 +20,15 @@ public class MapHandler {
 	
 	private void testFill(){
 		
-		currentMap.fillWithTile(new Tile(new Texture("Tiles/grass.png"), false));
+		currentMap.fillWithTile(new Tile(3, 1, false));
 
-		Tile dirt = new Tile(new Texture("Tiles/dirt.png"), true);
+		Tile dirt = new Tile(2, 1, true);
 
 		//Walls preventing ppl from running out
-		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(1, currentMap.getDimensionY() - 1, 0));
+		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(0, currentMap.getDimensionY() - 1, 0));
 		currentMap.fillWithTile(dirt, new Vector3(0, currentMap.getDimensionY() - 1, 0), new Vector3(currentMap.getDimensionX(), currentMap.getDimensionY() , 0));
 		currentMap.fillWithTile(dirt, new Vector3(currentMap.getDimensionX() - 1, 0, 0), new Vector3(currentMap.getDimensionX(), currentMap.getDimensionY() , 0));
-		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(currentMap.getDimensionX() - 1, 1, 0));
+		currentMap.fillWithTile(dirt, new Vector3(0, 0, 0), new Vector3(currentMap.getDimensionX() - 1, 0, 0));
 
 		currentMap.fillWithTile(dirt, new Vector3(8, 8, 0), new Vector3(24, 24, 0));
 		currentMap.fillWithTile(dirt, new Vector3(8, 24, 0), new Vector3(10, 34, 0));
@@ -63,7 +62,7 @@ public class MapHandler {
 	}
 	
 	public void draw(SpriteBatch a_batch, float a_zoom, Vector3 a_playerposition){
-		currentMap.draw(a_batch, a_zoom, a_playerposition);
+		currentMap.draw(a_batch, a_zoom, a_playerposition, 0);
 		entityHandler.draw(a_batch);
 	}
 

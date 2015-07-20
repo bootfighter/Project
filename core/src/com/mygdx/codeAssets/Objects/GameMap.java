@@ -1,9 +1,15 @@
 package com.mygdx.codeAssets.Objects;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.codeAssets.FileManagement.*;
 import com.mygdx.game.GameParameters;
 
 
@@ -15,7 +21,8 @@ public class GameMap {
 	private int dimensionZ;
 	private Vector2 drawPoint1;
 	private Vector2 drawPoint2;
-
+	private SpriteSheet tileOverlaySpriteSheet;
+	
 	// Constructors
 	public GameMap(int a_dimensionX, int a_dimensionY, int a_dimensionZ) {
 
@@ -25,7 +32,7 @@ public class GameMap {
 		
 		drawPoint1 = new Vector2(0, 0);
 		drawPoint2 = new Vector2(0, 0);
-		
+				
 		if(isPositiv(a_dimensionX, a_dimensionY, a_dimensionZ))
 			tileList = new Tile[dimensionX][dimensionY][dimensionZ];
 		else{
@@ -34,7 +41,6 @@ public class GameMap {
 			dimensionZ = 1;
 			tileList = new Tile[dimensionX][dimensionY][dimensionZ];
 		}
-		fillWithTile(new Tile());
 	}
 
 	public GameMap() {
@@ -43,8 +49,6 @@ public class GameMap {
 		dimensionY = 1;
 		dimensionZ = 1;
 		tileList = new Tile[dimensionX][dimensionY][dimensionZ];
-
-		fillWithTile(new Tile());
 
 	}
 
@@ -56,7 +60,7 @@ public class GameMap {
 		if(!isInbounds(a_dimensionX, a_dimensionY, a_dimensionZ))
 			return false;
 
-		tileList[a_dimensionX][a_dimensionY][a_dimensionZ] = a_tile;
+		tileList[a_dimensionX][a_dimensionY][a_dimensionZ] = new Tile(a_tile);
 
 		return true;
 	}
@@ -67,7 +71,7 @@ public class GameMap {
 		if(!isInbounds(a_point))
 			return false;
 
-		tileList[(int)a_point.x][(int)a_point.y][(int)a_point.z] = a_tile;
+		tileList[(int)a_point.x][(int)a_point.y][(int)a_point.z] = new Tile(a_tile);
 
 		return true;
 	}
@@ -79,6 +83,16 @@ public class GameMap {
 			return null;
 		return tileList[(int)a_tilePosition.x][(int)a_tilePosition.y][(int)a_tilePosition.z];
 	}
+
+	
+	//TODO: add to Game!!
+	//-----------------------------------------------------------------------------
+	public Tile getTileAtPosition(int a_xCoord, int a_yCoord, int a_zCoord) {
+		if(!isInbounds(a_xCoord, a_yCoord, a_zCoord))
+			return null;
+		return tileList[a_xCoord][a_yCoord][a_zCoord];
+	}
+	//-----------------------------------------------------------------------------
 
 	public int getDimensionX() {
 		return dimensionX;
@@ -94,9 +108,15 @@ public class GameMap {
 
 	public Tile[][][] getTileSubsection(Vector3 a_point1, Vector3 a_point2)
 	{
-		int dimX = (int) (a_point2.x - a_point1.x);
-		int dimY = (int) (a_point2.y - a_point1.y);
-		int dimZ = (int) (a_point2.z - a_point1.z);
+		Vector3 point1 = new Vector3(a_point1);
+		Vector3 point2 = new Vector3(a_point2);
+		sortPoints(point1, point2);
+		point1 = convertToInbounds(point1);
+		point2 = convertToInbounds(point2);
+		
+		int dimX = (int) (point2.x - point1.x);
+		int dimY = (int) (point2.y - point1.y);
+		int dimZ = (int) (point2.z - point1.z);
 				
 		Tile[][][] tileSubsection = new Tile[dimX+1][dimY+1][dimZ+1];
 		
@@ -106,7 +126,7 @@ public class GameMap {
 
 				for (int z = 0; z <= dimZ; z++) {
 					
-					tileSubsection[x][y][z] = tileList[(int)a_point1.x + x][(int)a_point1.y + y][(int)a_point1.z + z];
+					tileSubsection[x][y][z] = tileList[(int)point1.x + x][(int)point1.y + y][(int)point1.z + z];
 					
 				}	
 			}
@@ -122,7 +142,7 @@ public class GameMap {
 			for (int j = 0; j < dimensionY; j++) {
 
 				for (int k = 0; k < dimensionZ; k++) {
-					tileList[i][j][k] = a_tile;
+					tileList[i][j][k] = new Tile(a_tile);
 				}
 			}
 		}
@@ -130,26 +150,30 @@ public class GameMap {
 
 	public void fillWithTile(Tile a_tile, Vector3 a_point1, Vector3 a_point2) {
 
-		if(!isInbounds(a_point2) || !isInbounds(a_point1))
-			return;
 		
-		for (int i = (int) a_point1.x; i < a_point2.x; i++) {
+		Vector3 point1 = new Vector3(a_point1);
+		Vector3 point2 = new Vector3(a_point2);
+		sortPoints(point1, point2);
+		point1 = convertToInbounds(point1);
+		point2 = convertToInbounds(point2);
+		
+		for (int i = (int) point1.x; i <= point2.x; i++) {
 
-			for (int j = (int) a_point1.y; j < a_point2.y; j++) {
+			for (int j = (int) point1.y; j <= point2.y; j++) {
 
-				for (int k = (int) a_point1.z; k < a_point2.z + 1; k++) {
-					tileList[i][j][k] = a_tile;
+				for (int k = (int) point1.z; k <= point2.z ; k++) {
+					tileList[i][j][k] = new Tile(a_tile);
 				}
 			}
 		}
 	}
 
 	private boolean isInbounds(Vector3 a_index) {
-		if(a_index.x < 0 || a_index.x > dimensionX)
+		if(a_index.x < 0 || a_index.x >= dimensionX)
 			return false;
-		if(a_index.y < 0 || a_index.y > dimensionY)
+		if(a_index.y < 0 || a_index.y >= dimensionY)
 			return false;
-		if(a_index.z < 0 || a_index.z > dimensionZ)
+		if(a_index.z < 0 || a_index.z >= dimensionZ)
 			return false;
 		return true;
 	}
@@ -171,10 +195,16 @@ public class GameMap {
 		a_point.x = (a_point.x > dimensionX - 1) ? dimensionX - 1 : a_point.x;
 		a_point.y = (a_point.y > dimensionY - 1) ? dimensionY - 1 : a_point.y;
 		a_point.z = (a_point.z > dimensionZ - 1) ? dimensionZ - 1 : a_point.z;
+		
+		a_point.x = (int)a_point.x;
+		a_point.y = (int)a_point.y;
+		a_point.z = (int)a_point.z;
+		
+		
 		return a_point;
 	}
 	
- 	private boolean isPositiv(int a_dimensionX, int a_dimensionY, int a_dimensionZ){
+	private boolean isPositiv(int a_dimensionX, int a_dimensionY, int a_dimensionZ){
 		if(a_dimensionX < 0)
 			return false;
 		if(a_dimensionY < 0)
@@ -184,36 +214,289 @@ public class GameMap {
 		return true;
 	}
 	
-	public void draw(SpriteBatch a_batch, float a_zoom, Vector3 a_playerposition) {
+	public void sortPoints(Vector3 a_point1, Vector3 a_point2){
+		//swaps the values so that lower values are in point1
+		if (a_point1.x > a_point2.x) {
+			float swapVar = a_point1.x;
+			a_point1.x = a_point2.x;
+			a_point2.x = swapVar;
+		}
+		if (a_point1.y > a_point2.y) {
+			float swapVar = a_point1.y;
+			a_point1.y = a_point2.y;
+			a_point2.y = swapVar;
+		}
+		if (a_point1.z > a_point2.z) {
+			float swapVar = a_point1.z;
+			a_point1.z = a_point2.z;
+			a_point2.z = swapVar;
+		}
+	}
+	
+	
+	public void draw(SpriteBatch a_batch, float a_zoom, Vector3 a_cameraPosition, int currentZLevel) {
 
-		a_batch.begin();
-		
-		drawPoint1.x = (a_playerposition.x - ((float)Gdx.graphics.getWidth() / 2) * a_zoom);
-		drawPoint1.y = (a_playerposition.y - ((float)Gdx.graphics.getHeight() / 2) * a_zoom);
-		drawPoint2.x = (a_playerposition.x + ((float)Gdx.graphics.getWidth() / 2) * a_zoom);
-		drawPoint2.y = (a_playerposition.y + ((float)Gdx.graphics.getHeight() / 2) * a_zoom);
-		
+		drawPoint1.x = (a_cameraPosition.x - ((float)Gdx.graphics.getWidth() / 2) * a_zoom);
+		drawPoint1.y = (a_cameraPosition.y - ((float)Gdx.graphics.getHeight() / 2) * a_zoom);
+		drawPoint2.x = (a_cameraPosition.x + ((float)Gdx.graphics.getWidth() / 2) * a_zoom);
+		drawPoint2.y = (a_cameraPosition.y + ((float)Gdx.graphics.getHeight() / 2) * a_zoom);
+
 		drawPoint1.x = Tile.convertWorldSpaceToTileSpace((int)drawPoint1.x) - 5;
 		drawPoint1.y = Tile.convertWorldSpaceToTileSpace((int)drawPoint1.y) - 5;
 		drawPoint2.x = Tile.convertWorldSpaceToTileSpace((int)drawPoint2.x) + 5;
 		drawPoint2.y = Tile.convertWorldSpaceToTileSpace((int)drawPoint2.y) + 5;
+		
+		a_batch.begin();
 
 		
 		
-		for (int dimX = (int)drawPoint1.x; dimX < drawPoint2.x; dimX++) {
+		for (int dimZ = 0; dimZ < dimensionZ; dimZ++) {
+			
+			//draws layer above currentZLevel with only 30% opacity
+			if(dimZ > currentZLevel)
+				a_batch.setColor(1, 1, 1, 0.3f);
+			
+			//TileTextures
+			for (int dimX = (int)drawPoint1.x; dimX < drawPoint2.x; dimX++) {
 
-			for (int dimY = (int)drawPoint1.y; dimY < drawPoint2.y; dimY++) {
-
-				for (int dimZ = 0; dimZ < dimensionZ; dimZ++) {
+				for (int dimY = (int)drawPoint2.y; dimY > drawPoint1.y; dimY--) {
 					
 					if(isInbounds(dimX, dimY, dimZ)){
-						a_batch.draw(tileList[dimX][dimY][dimZ].texture, dimX * GameParameters.tileSize, dimY * GameParameters.tileSize);
+						//if not air tile (id == 1)
+						if (tileList[dimX][dimY][dimZ].getTextureID() != 1) {
+							//normal texture
+							a_batch.draw(tileList[dimX][dimY][dimZ].getTexture(), dimX * GameParameters.tileSize, dimY * GameParameters.tileSize + 
+									(dimZ - currentZLevel) * GameParameters.tileSideTextureHeight);
+						}
+					}
+				}
+			}
+			//Overlays
+			for (int dimX = (int)drawPoint1.x; dimX < drawPoint2.x; dimX++) {
+
+				for (int dimY = (int)drawPoint2.y; dimY > drawPoint1.y; dimY--) {
+
+					if(isInbounds(dimX, dimY, dimZ)){
+						//if not air tile (id == 1)
+						if (tileList[dimX][dimY][dimZ].getTextureID() != 1) {
+							//overlay
+							if(tileList[dimX][dimY][dimZ].getOverlayID() != 0)
+								a_batch.draw(tileOverlaySpriteSheet.getSpriteAtIndex(tileList[dimX][dimY][dimZ].getOverlayID()), dimX * GameParameters.tileSize, dimY * GameParameters.tileSize +
+										(dimZ - currentZLevel) * GameParameters.tileSideTextureHeight);
+						}
+					}
+				}
+			}
+			//sideTextures
+			for (int dimX = (int)drawPoint1.x; dimX < drawPoint2.x; dimX++) {
+
+				for (int dimY = (int)drawPoint2.y; dimY > drawPoint1.y; dimY--) {
+					
+					if(isInbounds(dimX, dimY, dimZ)){
+						//if not air tile (id == 1)
+						if (tileList[dimX][dimY][dimZ].getTextureID() != 1) {
+							//side texture
+							//if texture in front of it is air
+							if (dimY > 0 && tileList[dimX][dimY - 1][dimZ].getTextureID() == 1) {
+								a_batch.draw(tileList[dimX][dimY][dimZ].getSideTexture(), dimX * GameParameters.tileSize, dimY * GameParameters.tileSize + 
+										(dimZ - 1 - currentZLevel) * GameParameters.tileSideTextureHeight);
+							}
+						}
 					}
 				}
 			}
 		}
+		a_batch.setColor(1, 1, 1, 1);
 		a_batch.end();
 		
 	}
+	
+	public Tile[][][] getTiles() {
+		return tileList;
+	}
+	
+	
+	public void calculateTransitions() {
+		
+		ArrayList<int[]> adjacentTileIDList = new ArrayList<int[]>();
+		ArrayList<Pixmap> overlays = new ArrayList<Pixmap>();
+		boolean newIDCombination = false;
+		int adjacentTileIds[] = {-1,-1,-1,-1};
+		int lastOverlayID = 0;
+		
+		adjacentTileIDList.add(adjacentTileIds);
+		overlays.add(calculateOverlay(adjacentTileIds));
+		
+		adjacentTileIds = new int[4];
+		
+		for (int iZ = 0; iZ < dimensionZ ; iZ++) {
+			
+			for (int iX = 0; iX < dimensionX; iX++) {
 
+				for (int iY = 0; iY < dimensionY; iY++) {
+
+					//-1 = no overlay or same tileID 
+					//resetting values
+					adjacentTileIds[0] = -1; //north
+					adjacentTileIds[1] = -1; //east
+					adjacentTileIds[2] = -1; //south
+					adjacentTileIds[3] = -1; //west
+
+					//north
+					if(iY + 1 < dimensionY) {
+						adjacentTileIds[0] = tileList[iX][iY + 1][iZ].getTextureID();
+						if(adjacentTileIds[0] == tileList[iX][iY][iZ].getTextureID() || adjacentTileIds[0] == 1)
+							adjacentTileIds[0] = -1;
+					}
+
+					//east
+					if(iX + 1 < dimensionX) {
+						adjacentTileIds[1] = tileList[iX + 1][iY][iZ].getTextureID();
+						if(adjacentTileIds[1] == tileList[iX][iY][iZ].getTextureID() || adjacentTileIds[1] == 1)
+							adjacentTileIds[1] = -1;
+					}
+
+					//south
+					if(iY - 1 >= 0) {
+						adjacentTileIds[2] = tileList[iX][iY - 1][iZ].getTextureID();
+						if(adjacentTileIds[2] == tileList[iX][iY][iZ].getTextureID() || adjacentTileIds[2] == 1)
+							adjacentTileIds[2] = -1;
+					}
+
+					//west
+					if(iX - 1 >= 0) { 
+						adjacentTileIds[3] = tileList[iX - 1][iY][iZ].getTextureID();
+						if(adjacentTileIds[3] == tileList[iX][iY][iZ].getTextureID() || adjacentTileIds[3] == 1)
+							adjacentTileIds[3] = -1;
+					}
+					
+					newIDCombination = true;
+										
+					//checks if the last Tile is the same as the current one
+					if (adjacentTileIDList.size() != 0 && Arrays.equals(adjacentTileIDList.get(lastOverlayID), adjacentTileIds)) {
+						
+						tileList[iX][iY][iZ].setOverlayID(lastOverlayID);
+						newIDCombination = false;
+						
+					}else{
+						
+						//searching in adjacentTileIDList list if current combination of adjacent IDs already exist
+						for (int overlayID = 0; overlayID < adjacentTileIDList.size(); overlayID++) {
+
+							if(Arrays.equals(adjacentTileIDList.get(overlayID), adjacentTileIds)) {
+
+								//if an equal combination of adjacent ID has been found, the overlay texture gets set on current Tile
+								tileList[iX][iY][iZ].setOverlayID(overlayID);
+								lastOverlayID = overlayID;
+								newIDCombination = false;
+
+								break;
+							}
+						}
+					}
+					
+					if(newIDCombination) {
+						//calculates new overlay with information about all adjacent Tile IDs
+						lastOverlayID = overlays.size() - 1;
+						tileList[iX][iY][iZ].setOverlayID(overlays.size());
+
+						adjacentTileIDList.add(adjacentTileIds);
+						overlays.add(calculateOverlay(adjacentTileIds));
+						
+						
+						
+						//creating new instance for next loop
+						adjacentTileIds = new int[4];
+					}
+				}
+			}
+		}
+		tileOverlaySpriteSheet = SpriteSheetPacker.packSpriteSheet(overlays, GameParameters.tileSize, GameParameters.tileSize, 512, 512);
+		System.out.println("overlay list size: " + overlays.size());
+	}
+	
+	private Pixmap calculateOverlay(int[] a_adjacentTileIds) {
+			
+		Pixmap overlay = new Pixmap(16, 16, Format.RGBA8888);
+
+		Pixmap overlayMask;
+		Pixmap overlayCoulors;
+		int pixelMask;
+		int pixelColor;
+		
+		//north
+		if(a_adjacentTileIds[0] != -1) {
+			
+			
+			overlayMask = TextureManager.getOverlayPixmap(0);
+			overlayCoulors = TextureManager.getTilePixmap(a_adjacentTileIds[0]);
+			
+			for (int iX = 0; iX < GameParameters.tileSize; iX++) {
+				for (int iY = 0; iY < 4; iY++) {
+					pixelMask = overlayMask.getPixel(iX, iY);
+					pixelColor = overlayCoulors.getPixel(iX, iY);
+					
+					overlay.drawPixel(iX, iY, ((pixelMask & 0x000000FF) + (pixelColor & 0xFFFFFF00)));
+					
+
+				}
+			}
+		}
+		
+		//east
+		if(a_adjacentTileIds[1] != -1) {
+			
+			overlayMask = TextureManager.getOverlayPixmap(1);
+			overlayCoulors = TextureManager.getTilePixmap(a_adjacentTileIds[1]);
+			
+			for (int iX = 12; iX < GameParameters.tileSize; iX++) {
+				for (int iY = 0; iY < GameParameters.tileSize; iY++) {
+					pixelMask = overlayMask.getPixel(iX, iY);
+					pixelColor = overlayCoulors.getPixel(iX, iY);
+					
+					overlay.drawPixel(iX, iY, ((pixelMask & 0x000000FF) + (pixelColor & 0xFFFFFF00)));
+					
+
+				}
+			}
+		}
+		
+		//south
+		if(a_adjacentTileIds[2] != -1) {
+			
+			overlayMask = TextureManager.getOverlayPixmap(2);
+			overlayCoulors = TextureManager.getTilePixmap(a_adjacentTileIds[2]);
+			
+			for (int iX = 0; iX < GameParameters.tileSize; iX++) {
+				for (int iY = 12; iY < GameParameters.tileSize; iY++) {
+					pixelMask = overlayMask.getPixel(iX, iY);
+					pixelColor = overlayCoulors.getPixel(iX, iY);
+					
+					overlay.drawPixel(iX, iY, ((pixelMask & 0x000000FF) + (pixelColor & 0xFFFFFF00)));
+					
+
+				}
+			}
+		}
+		
+		//west
+		if(a_adjacentTileIds[3] != -1) {
+			
+			overlayMask = TextureManager.getOverlayPixmap(3);
+			overlayCoulors = TextureManager.getTilePixmap(a_adjacentTileIds[3]);
+			
+			for (int iX = 0; iX < 4; iX++) {
+				for (int iY = 0; iY < GameParameters.tileSize; iY++) {
+					pixelMask = overlayMask.getPixel(iX, iY);
+					pixelColor = overlayCoulors.getPixel(iX, iY);
+					
+					overlay.drawPixel(iX, iY, ((pixelMask & 0x000000FF) + (pixelColor & 0xFFFFFF00)));
+					
+
+				}
+			}
+		}
+		return overlay;
+	}
+	
 }

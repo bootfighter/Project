@@ -8,7 +8,8 @@ public class DustParticleEmitter extends ParticleEmitter{
 		
 		velocity.x = 0;
 		velocity.y = 5;
-		randPosition.y = 0f;
+		randPosition.x = 5f;
+		randPosition.y = 5f;
 		randVelocity.x = 0f;
 		randVelocity.y = 9f;
 		//force.y = -0.01f;
