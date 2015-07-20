@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
+
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.GameParameters;
 
 public abstract class ParticleEmitter {
 
@@ -46,14 +48,9 @@ public abstract class ParticleEmitter {
 	private float currentTime;
 	private float timeStep;
 	
-	// DELETE THIS<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-	private Texture tmpTexture;
-	
 	
 	public ParticleEmitter() {
-		
-		tmpTexture = new Texture("Particles/Dust.png");
-		
+			
 		particlePerSecond = 0;
 		particleID = 0;
 		
@@ -101,7 +98,9 @@ public abstract class ParticleEmitter {
 		
 		for (Particle particle : particlePool) {
 			if (particle.getLifeTime() > 0) {
-				a_batch.draw(tmpTexture, particle.getPosition().x, particle.getPosition().y);
+				a_batch.draw(particle.getTexture(), particle.getPosition().x, particle.getPosition().y, 
+						GameParameters.particleSize / 2, GameParameters.particleSize / 2,
+						GameParameters.particleSize, GameParameters.particleSize, 1, 1, particle.getAngle());
 			}
 		}
 		

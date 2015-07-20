@@ -1,7 +1,9 @@
 package com.mygdx.codeAssets.Particles;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.codeAssets.FileManagement.TextureManager;
 
 public class Particle {
 	
@@ -84,6 +86,9 @@ public class Particle {
 	}
 	public int getParticleID() {
 		return particleID;
+	}
+	public TextureRegion getTexture(){
+		return TextureManager.getParticle(particleID);
 	}
 	public Vector3 getPosition() {
 		return position;

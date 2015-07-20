@@ -12,6 +12,7 @@ public class GameParameters {
 	
 	
 	public static final int tileSize = 16; //size of side-lenght of quadratic tiles in pixel
+	public static final int particleSize = 4;
 	public static final float collisionIteration = 1f;
 	
 	//temporary startup map sizes
@@ -23,6 +24,7 @@ public class GameParameters {
 	
 	public static String mapFolderPath = "../core/assets/";	
 	
+	public static String particleFolderPath = "Particles/";
 	public static String tileFolderPath = "Tiles/TileTextures/";
 	public static String tileSpriteSheetFolderPath = "Tiles/SpriteSheets/";
 	public static String sideTextureFolderPath = "Tiles/SideTextures/";

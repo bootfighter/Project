@@ -15,7 +15,9 @@ public class DustParticleEmitter extends ParticleEmitter{
 		//force.y = -0.01f;
 		
 		angle = 0;
-		randAngle = 10;
+		randAngle = 30;
+		angularVelocity = 180;
+		angularForce = -180;
 		
 		lifeTime = 1f;
 		randLifeTime = 0.4f;

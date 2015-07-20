@@ -18,15 +18,18 @@ public class TextureManager {
 	private static ArrayList<String> tileTextureStringList = initTileTextureStringList();
 	private static ArrayList<String> tileSideTextureStringList = initTileSideTextureStringList();
 	private static ArrayList<String> overlayTextureStringList = initOverlayTextureStringList();
+	private static ArrayList<String> particleTextureStringList = initParticleTextureStringList();
 	private static ArrayList<String> entityTextureStringList = initEntityTextureStringList();
 	
-	private static SpriteSheet tileTextureSpriteSheet = initTileTextureSpriteSheet();;
-	private static SpriteSheet tileSideTextureSpriteSheet = initTileSideTextureSpriteSheet();;
+	private static SpriteSheet tileTextureSpriteSheet = initTileTextureSpriteSheet();
+	private static SpriteSheet particleSpriteSheet = initParticleSpriteSheet();
+	private static SpriteSheet tileSideTextureSpriteSheet = initTileSideTextureSpriteSheet();
 	
 
 			
 			
 	// ====================== String lists ======================
+	//Texture
  	private static ArrayList<String> initTileTextureStringList() {
 		
  		 ArrayList<String> list = new ArrayList<String>();
@@ -47,7 +50,7 @@ public class TextureManager {
  		return tileTextureStringList;
  	}
  	
-	
+ 	//SiteTexture
 	private static ArrayList<String> initTileSideTextureStringList(){
 		ArrayList<String> list = new ArrayList<String>();
 		
@@ -57,11 +60,11 @@ public class TextureManager {
 		return list;
 	}
 	
-	
 	public static ArrayList<String> getTileSideTextureStringList(){
 		return tileSideTextureStringList;
 	}
 	
+	//Overlay
 	private static ArrayList<String> initOverlayTextureStringList(){
 		ArrayList<String> list= new ArrayList<String>();
 
@@ -78,8 +81,9 @@ public class TextureManager {
 		return overlayTextureStringList;
 	}
 	
+	//Entity
 	private static ArrayList<String> initEntityTextureStringList(){
-		ArrayList<String> list= new ArrayList<String>();
+		ArrayList<String> list = new ArrayList<String>();
 		
 		list.add("baum1.png"); //0
 		
@@ -89,6 +93,19 @@ public class TextureManager {
 	public static ArrayList<String> getEntityTextureStringList(){
 		return entityTextureStringList;
 	}
+	
+	//Particle
+	private static ArrayList<String> initParticleTextureStringList(){
+		ArrayList<String> list = new ArrayList<String>();
+		
+		list.add("dust.png"); //0
+
+		return list;
+	}
+	
+	public static ArrayList<String> getParticleTextureStringList(){
+		return particleTextureStringList;
+	}
 	// ====================== Tile Texture Getter ======================
 		
 	private static SpriteSheet initTileTextureSpriteSheet(){
@@ -96,7 +113,7 @@ public class TextureManager {
 //				numberOfTileTextures, GameParameters.tileSize, GameParameters.tileSize);
 		
 		return SpriteSheetPacker.packSpriteSheet(GameParameters.tileFolderPath, tileTextureStringList, GameParameters.tileSize, GameParameters.tileSize,
-													128, 512);
+													512, 512);
 	}
 	
 	
@@ -137,7 +154,25 @@ public class TextureManager {
 	
 	// ====================== Entity Texture Getter ======================
 	
-
+	// ====================== Praticle Getter ======================
+	
+	private static SpriteSheet initParticleSpriteSheet(){
+		return SpriteSheetPacker.packSpriteSheet(GameParameters.particleFolderPath, particleTextureStringList, GameParameters.particleSize, GameParameters.particleSize,
+													128, 128);
+	}
+	
+	
+	public static TextureRegion getParticle(int a_particleID){
+		return particleSpriteSheet.getSpriteAtIndex(a_particleID);		
+	}
+	
+	public static SpriteSheet getParticleSpriteSheet(){
+		return particleSpriteSheet;
+	}
+	
+	public static int getNumberOfParticles(){
+		return particleSpriteSheet.getNumberOfSprites();
+	}
 	
 	
 	// ====================== Overlay Pixmap Getter ======================
